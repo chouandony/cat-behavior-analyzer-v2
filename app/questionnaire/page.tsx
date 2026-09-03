@@ -1,446 +1,233 @@
 "use client";
 
-import { useState, useRef, useCallback, useEffect } from "react";
+import { useState, useEffect } from "react";
+import Link from "next/link";
 import { useRouter } from "next/navigation";
 import {
-  ChevronRight,
-  ChevronLeft,
-  AlertCircle,
-  CheckCircle2,
-  ClipboardCheck,
-  Cat,
-  Save,
-  RotateCcw,
+  ArrowRight,
   AlertTriangle,
+  ShieldCheck,
+  Cat,
+  BarChart3,
+  RefreshCw,
+  ChevronRight,
+  Sparkles,
 } from "lucide-react";
-import { sections, scoreLabels, scoreColors, scoreHoverColors, scoreBarColors } from "@/data/questionnaire";
-import { getUnansweredInSection } from "@/data/scoring";
+import { calculateScores, type QuestionnaireResult, getRiskLabel, getLevelConfig } from "@/data/scoring";
+import { behaviors } from "@/data/behaviors";
 import CatSVG from "@/components/CatSVG";
 
-const STORAGE_KEY = "cat-questionnaire-answers";
-const STORAGE_PROGRESS = "cat-questionnaire-progress";
-
-export default function QuestionnairePage() {
+export default function QuestionnaireResultPage() {
   const router = useRouter();
-  const [currentSection, setCurrentSection] = useState(0);
-  const [answers, setAnswers] = useState<Record<number, number>>({});
-  const [warning, setWarning] = useState<{
-    show: boolean;
-    missing: number[];
-    message: string;
-  }>({ show: false, missing: [], message: "" });
-  const [highlightId, setHighlightId] = useState<number | null>(null);
-  const [isSubmitting, setIsSubmitting] = useState(false);
-  const [shakeSection, setShakeSection] = useState(false);
-  const questionRefs = useRef<Record<number, HTMLDivElement | null>>({});
-  const sectionRef = useRef<HTMLDivElement>(null);
+  const [result, setResult] = useState<QuestionnaireResult | null>(null);
+  const [loading, setLoading] = useState(true);
 
-  // 載入本地儲存
   useEffect(() => {
+    const raw = sessionStorage.getItem("cat-questionnaire-result");
+    if (!raw) {
+      router.push("/questionnaire/");
+      return;
+    }
     try {
-      const saved = localStorage.getItem(STORAGE_KEY);
-      const savedProgress = localStorage.getItem(STORAGE_PROGRESS);
-      if (saved) {
-        setAnswers(JSON.parse(saved));
-      }
-      if (savedProgress) {
-        setCurrentSection(Number(savedProgress));
-      }
+      const answers = JSON.parse(raw);
+      const res = calculateScores(answers);
+      setResult(res);
     } catch {
-      // ignore
+      router.push("/questionnaire/");
+    } finally {
+      setLoading(false);
     }
-  }, []);
+  }, [router]);
 
-  // 自動儲存
-  useEffect(() => {
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(answers));
-    localStorage.setItem(STORAGE_PROGRESS, String(currentSection));
-  }, [answers, currentSection]);
+  if (loading) {
+    return (
+      <div className="flex flex-col items-center justify-center py-20 space-y-4">
+        <div className="animate-float">
+          <CatSVG size={120} pose="standing" />
+        </div>
+        <p className="text-slate-600 font-bold text-lg">正在分析行為數據...</p>
+        <div className="w-48 h-3 bg-slate-100 rounded-full overflow-hidden">
+          <div className="h-full bg-gradient-to-r from-emerald-400 via-orange-400 to-red-400 rounded-full animate-pulse w-full" />
+        </div>
+      </div>
+    );
+  }
 
-  // 離開頁面警告
-  useEffect(() => {
-    const handleBeforeUnload = (e: BeforeUnloadEvent) => {
-      const allUnanswered = sections
-        .flatMap((s) => s.questions.map((q) => q.id))
-        .filter((id) => answers[id] === undefined);
-      if (allUnanswered.length > 0) {
-        e.preventDefault();
-        e.returnValue = "";
-      }
-    };
-    window.addEventListener("beforeunload", handleBeforeUnload);
-    return () => window.removeEventListener("beforeunload", handleBeforeUnload);
-  }, [answers]);
+  if (!result) return null;
 
-  const current = sections[currentSection];
-  const totalSections = sections.length;
-  const progress = Math.round((Object.keys(answers).length / 100) * 100);
-
-  const handleSelect = useCallback((qid: number, value: number) => {
-    setAnswers((prev) => ({ ...prev, [qid]: value }));
-    // 即時解除警告
-    setWarning((prev) => {
-      if (prev.missing.includes(qid)) {
-        const remaining = prev.missing.filter((id) => id !== qid);
-        if (remaining.length === 0) {
-          return { show: false, missing: [], message: "" };
-        }
-        return {
-          ...prev,
-          missing: remaining,
-          message: `尚有 ${remaining.length} 題未作答（題號：${remaining.join(", ")}）`,
-        };
-      }
-      return prev;
-    });
-  }, []);
-
-  const validateSection = useCallback(() => {
-    const missing = getUnansweredInSection(answers, currentSection);
-    if (missing.length > 0) {
-      setWarning({
-        show: true,
-        missing,
-        message: `尚有 ${missing.length} 題未作答（題號：${missing.join(", ")}）`,
-      });
-      setShakeSection(true);
-      setTimeout(() => setShakeSection(false), 500);
-      // 自動滾動到第一個未作答題目
-      const firstMissing = missing[0];
-      setHighlightId(firstMissing);
-      setTimeout(() => setHighlightId(null), 2000);
-
-      const el = questionRefs.current[firstMissing];
-      if (el) {
-        el.scrollIntoView({ behavior: "smooth", block: "center" });
-      } else if (sectionRef.current) {
-        sectionRef.current.scrollIntoView({ behavior: "smooth", block: "start" });
-      }
-      return false;
-    }
-    setWarning({ show: false, missing: [], message: "" });
-    return true;
-  }, [answers, currentSection]);
-
-  const handleNext = useCallback(() => {
-    if (!validateSection()) return;
-    if (currentSection < totalSections - 1) {
-      setCurrentSection((prev) => prev + 1);
-      window.scrollTo({ top: 0, behavior: "smooth" });
-    }
-  }, [validateSection, currentSection, totalSections]);
-
-  const handlePrev = useCallback(() => {
-    setWarning({ show: false, missing: [], message: "" });
-    if (currentSection > 0) {
-      setCurrentSection((prev) => prev - 1);
-      window.scrollTo({ top: 0, behavior: "smooth" });
-    }
-  }, [currentSection]);
-
-  const handleSubmit = useCallback(() => {
-    if (!validateSection()) return;
-    // 檢查是否所有部分都完成
-    const allMissing: number[] = [];
-    for (let i = 0; i < totalSections; i++) {
-      allMissing.push(...getUnansweredInSection(answers, i));
-    }
-    if (allMissing.length > 0) {
-      for (let i = 0; i < totalSections; i++) {
-        if (getUnansweredInSection(answers, i).length > 0) {
-          setCurrentSection(i);
-          setTimeout(() => {
-            setWarning({
-              show: true,
-              missing: allMissing,
-              message: `全問卷尚有 ${allMissing.length} 題未作答，已自動跳轉至未完成區塊`,
-            });
-            setShakeSection(true);
-            setTimeout(() => setShakeSection(false), 500);
-            const first = getUnansweredInSection(answers, i)[0];
-            if (first) {
-              setHighlightId(first);
-              setTimeout(() => setHighlightId(null), 2000);
-              const el = questionRefs.current[first];
-              if (el) el.scrollIntoView({ behavior: "smooth", block: "center" });
-            }
-          }, 100);
-          return;
-        }
-      }
-    }
-
-    setIsSubmitting(true);
-    sessionStorage.setItem("cat-questionnaire-result", JSON.stringify(answers));
-    router.push("/questionnaire/result/");
-  }, [validateSection, answers, totalSections, router]);
-
-  const handleReset = useCallback(() => {
-    if (confirm("確定要清除所有已填寫的答案嗎？此操作無法復原。")) {
-      setAnswers({});
-      setCurrentSection(0);
-      setWarning({ show: false, missing: [], message: "" });
-      localStorage.removeItem(STORAGE_KEY);
-      localStorage.removeItem(STORAGE_PROGRESS);
-    }
-  }, []);
-
-  const isQuestionMissing = (qid: number) =>
-    warning.show && warning.missing.includes(qid);
-
-  const getSelectedColor = (qid: number) => {
-    const val = answers[qid];
-    if (val === undefined) return null;
-    return scoreBarColors[val as keyof typeof scoreBarColors] || "bg-slate-300";
-  };
+  const riskLabel = getRiskLabel(result.overallRisk);
+  const flaggedBehaviors = result.behaviorScores.filter((b) => b.flagged);
+  const normalBehaviors = result.behaviorScores.filter((b) => !b.flagged);
 
   return (
-    <div className="space-y-4 pb-32">
-      {/* 頂部標題區 - 更艷麗 */}
+    <div className="space-y-6 pb-24">
+      {/* 總覽卡片 - 更艷麗 */}
       <div className="relative bg-gradient-to-br from-orange-50 via-white to-emerald-50 rounded-3xl border-2 border-orange-100 p-6 overflow-hidden">
         <div className="flex items-center gap-4">
-          <div className="shrink-0 animate-float">
+          <div className="shrink-0">
             <CatSVG size={80} pose="waving" />
           </div>
-          <div className="flex-1 min-w-0">
-            <div className="flex items-center gap-2 mb-1">
-              <ClipboardCheck size={16} className="text-orange-500" />
-              <span className="text-xs font-bold text-orange-600 tracking-wide">
-                Fe-BARQ 專業評估
-              </span>
-            </div>
-            <h1 className="text-xl font-black text-slate-800 leading-tight">
-              貓咪行為評估問卷
-            </h1>
-            <p className="text-sm text-slate-500 mt-1 leading-relaxed">
-              100題專業評估，涵蓋24個行為維度，幫助您全面了解貓咪的行為特徵。
+          <div className="flex-1">
+            <h1 className="text-xl font-black text-slate-800">評估結果總覽</h1>
+            <p className="text-sm text-slate-500 mt-1">
+              完成 {result.completedCount} / {result.totalCount} 題
             </p>
           </div>
         </div>
 
-        {/* 進度條 */}
-        <div className="mt-4">
-          <div className="flex justify-between text-xs text-slate-500 mb-1.5">
-            <span className="font-medium">完成進度</span>
-            <span className="font-bold text-slate-700">{progress}%</span>
+        {/* 風險儀表板 */}
+        <div className="mt-5 bg-white rounded-2xl border border-slate-200 p-4 shadow-sm">
+          <div className="flex items-center justify-between mb-3">
+            <span className="text-sm font-bold text-slate-700">整體行為風險指數</span>
+            <span className={`text-sm font-black px-3 py-1 rounded-full ${riskLabel.bg} ${riskLabel.color}`}>
+              {riskLabel.text}
+            </span>
           </div>
-          <div className="h-3 bg-slate-100 rounded-full overflow-hidden">
+          <div className="relative h-4 bg-slate-100 rounded-full overflow-hidden">
             <div
-              className="h-full bg-gradient-to-r from-emerald-400 via-orange-400 to-red-400 rounded-full transition-all duration-500"
-              style={{ width: `${progress}%` }}
+              className="absolute inset-y-0 left-0 rounded-full transition-all duration-1000"
+              style={{
+                width: `${result.overallRisk}%`,
+                background: `linear-gradient(90deg, #10B981 0%, #F59E0B 50%, #EF4444 100%)`,
+              }}
             />
           </div>
           <div className="flex justify-between text-[10px] text-slate-400 mt-1">
-            <span>{Object.keys(answers).length} / 100 題</span>
-            <span>第 {currentSection + 1} / {totalSections} 部分</span>
+            <span>0</span>
+            <span>50</span>
+            <span>100</span>
           </div>
+          <p className="text-xs text-slate-500 mt-2 leading-relaxed">
+            基於 {flaggedBehaviors.length} 項行為維度超過關注閾值計算。此指數僅供參考，具體訓練方案請諮詢專業行為師。
+          </p>
         </div>
       </div>
 
-      {/* 紅色警告區塊 - 更醒目 */}
-      {warning.show && (
-        <div className="animate-fade-in-up bg-red-50 border-l-4 border-red-500 rounded-xl p-4 flex items-start gap-3 shadow-sm">
-          <AlertTriangle size={20} className="text-red-500 shrink-0 mt-0.5" />
-          <div className="flex-1">
-            <p className="text-sm font-bold text-red-700">{warning.message}</p>
-            <p className="text-xs text-red-500 mt-1">
-              請完成所有題目後再繼續。未作答題目已標記為紅色。
-            </p>
+      {/* 需要關注的行為 */}
+      {flaggedBehaviors.length > 0 && (
+        <div className="space-y-3">
+          <div className="flex items-center gap-2">
+            <AlertTriangle size={18} className="text-orange-500" />
+            <h2 className="text-base font-bold text-slate-800">
+              需要關注的行為（{flaggedBehaviors.length} 項）
+            </h2>
+          </div>
+
+          <div className="grid gap-3">
+            {flaggedBehaviors.map((b, idx) => {
+              const levelCfg = getLevelConfig(b.level);
+              const queryString = `?behaviors=${b.behavior.id}`;
+              return (
+                <div
+                  key={b.behavior.id}
+                  className="bg-white rounded-xl border-2 border-slate-200 p-4 card-hover animate-fade-in-up"
+                  style={{ animationDelay: `${idx * 0.1}s`, animationFillMode: "both" }}
+                >
+                  <div className="flex items-start gap-3">
+                    <div className="shrink-0 text-2xl">{b.behavior.emoji}</div>
+                    <div className="flex-1 min-w-0">
+                      <div className="flex items-center gap-2 flex-wrap">
+                        <h3 className="font-bold text-slate-800">{b.behavior.name}</h3>
+                        <span className={`text-[10px] font-bold px-2 py-0.5 rounded-full border ${levelCfg.bg} ${levelCfg.color} ${levelCfg.border}`}>
+                          {levelCfg.label}
+                        </span>
+                      </div>
+                      <p className="text-xs text-slate-500 mt-1 leading-relaxed">
+                        {b.behavior.description}
+                      </p>
+                      <div className="flex items-center gap-3 mt-2">
+                        <div className="flex-1">
+                          <div className="flex justify-between text-[10px] text-slate-500 mb-0.5">
+                            <span>平均得分</span>
+                            <span className="font-bold text-slate-700">{b.average} / 5</span>
+                          </div>
+                          <div className="h-2 bg-slate-100 rounded-full overflow-hidden">
+                            <div
+                              className="h-full rounded-full bg-gradient-to-r from-emerald-400 to-orange-400"
+                              style={{ width: `${(b.average / 5) * 100}%` }}
+                            />
+                          </div>
+                        </div>
+                        <Link
+                          href={`/abc/${queryString}`}
+                          className="shrink-0 flex items-center gap-1 px-3 py-1.5 rounded-lg bg-orange-50 text-orange-600 text-xs font-bold border border-orange-200 hover:bg-orange-100 transition-colors"
+                        >
+                          <Sparkles size={12} />
+                          ABC分析
+                          <ChevronRight size={12} />
+                        </Link>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              );
+            })}
           </div>
         </div>
       )}
 
-      {/* 區塊導航快捷列 */}
-      <div className="flex gap-1.5 overflow-x-auto pb-2 scrollbar-hide">
-        {sections.map((sec, idx) => {
-          const missingCount = getUnansweredInSection(answers, idx).length;
-          const isActive = idx === currentSection;
-          const isCompleted = missingCount === 0;
-          return (
-            <button
-              key={sec.id}
-              onClick={() => {
-                setCurrentSection(idx);
-                setWarning({ show: false, missing: [], message: "" });
-                window.scrollTo({ top: 0, behavior: "smooth" });
-              }}
-              className={`shrink-0 px-3 py-1.5 rounded-lg text-xs font-bold transition-all border ${
-                isActive
-                  ? "bg-orange-500 text-white border-orange-500 shadow-md"
-                  : isCompleted
-                  ? "bg-emerald-50 text-emerald-600 border-emerald-200"
-                  : "bg-white text-slate-400 border-slate-200"
-              }`}
-            >
-              <span className="mr-1">{idx + 1}</span>
-              {isCompleted && <span className="inline-block ml-0.5">✓</span>}
-              {missingCount > 0 && !isActive && (
-                <span className="ml-0.5 text-red-500">({missingCount})</span>
-              )}
-            </button>
-          );
-        })}
-      </div>
-
-      {/* 當前區塊 */}
-      <div ref={sectionRef} className={`space-y-4 ${shakeSection ? 'animate-shake' : ''}`}>
-        <div className="flex items-center gap-3">
-          <div className="w-10 h-10 rounded-xl bg-orange-100 flex items-center justify-center shrink-0">
-            <Cat size={20} className="text-orange-600" />
-          </div>
-          <div>
-            <h2 className="text-lg font-bold text-slate-800">{current.title}</h2>
-            <p className="text-xs text-slate-500">{current.description}</p>
-          </div>
-          <div className="ml-auto text-xs text-slate-500 bg-white px-3 py-1 rounded-full border border-slate-200">
-            {current.questions.length} 題
-          </div>
-        </div>
-
-        {/* 題目列表 */}
+      {/* 正常範圍的行為 */}
+      {normalBehaviors.length > 0 && (
         <div className="space-y-3">
-          {current.questions.map((q) => {
-            const missing = isQuestionMissing(q.id);
-            const selected = answers[q.id];
-            const isHighlighted = highlightId === q.id;
-            const barColor = getSelectedColor(q.id);
+          <div className="flex items-center gap-2">
+            <ShieldCheck size={18} className="text-emerald-500" />
+            <h2 className="text-base font-bold text-slate-800">
+              正常範圍的行為（{normalBehaviors.length} 項）
+            </h2>
+          </div>
 
-            return (
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+            {normalBehaviors.map((b) => (
               <div
-                key={q.id}
-                ref={(el) => {
-                  questionRefs.current[q.id] = el;
-                }}
-                className={`relative bg-white rounded-xl border-2 p-4 transition-all duration-300 overflow-hidden ${
-                  missing
-                    ? "border-red-400 shadow-red-100 shadow-md"
-                    : isHighlighted
-                    ? "border-orange-400 shadow-orange-100 shadow-lg scale-[1.02]"
-                    : barColor
-                    ? "border-slate-200"
-                    : "border-slate-200 hover:border-orange-200"
-                }`}
+                key={b.behavior.id}
+                className="bg-white rounded-xl border border-slate-200 p-3 flex items-center gap-3 opacity-70 hover:opacity-100 transition-opacity"
               >
-                {/* 左側 Color Bar */}
-                <div className={`color-bar ${barColor || (missing ? "bg-red-400" : "bg-transparent")}`} />
-
-                <div className="flex items-start gap-3 mb-3 pl-2">
-                  <div
-                    className={`shrink-0 w-8 h-8 rounded-full flex items-center justify-center text-xs font-bold transition-all ${
-                      missing
-                        ? "bg-red-100 text-red-600 animate-pulse"
-                        : selected !== undefined
-                        ? `${scoreBarColors[selected as keyof typeof scoreBarColors]} text-white`
-                        : "bg-slate-100 text-slate-500"
-                    }`}
-                  >
-                    {q.id}
-                  </div>
-                  <p
-                    className={`text-sm font-semibold leading-relaxed pt-1 ${
-                      missing ? "text-red-700" : "text-slate-700"
-                    }`}
-                  >
-                    {q.text}
-                    {q.reverse && (
-                      <span className="ml-1.5 text-[10px] text-slate-400 bg-slate-50 px-1.5 py-0.5 rounded border border-slate-200">
-                        反向計分
-                      </span>
-                    )}
-                  </p>
+                <div className="text-xl shrink-0">{b.behavior.emoji}</div>
+                <div className="flex-1 min-w-0">
+                  <p className="text-sm font-bold text-slate-600 truncate">{b.behavior.name}</p>
+                  <p className="text-[10px] text-slate-400">得分 {b.average} / 5</p>
                 </div>
-
-                {/* 極端值提示 */}
-                {selected === 5 && (
-                  <div className="mb-2 pl-10">
-                    <span className="inline-flex items-center gap-1 text-[10px] font-bold text-red-600 bg-red-50 px-2 py-0.5 rounded-full border border-red-200">
-                      <AlertTriangle size={10} />
-                      這個行為頻率很高，建議優先關注
-                    </span>
-                  </div>
-                )}
-
-                {/* 選項 - Solid Color 方案 */}
-                <div className="grid grid-cols-6 gap-1.5 pl-2">
-                  {[0, 1, 2, 3, 4, 5].map((val) => {
-                    const isSelected = selected === val;
-                    const baseClasses = "score-option py-2.5 px-1 rounded-lg text-xs font-bold border-2 transition-all";
-                    const selectedClasses = isSelected
-                      ? scoreColors[val as keyof typeof scoreColors]
-                      : `bg-white text-slate-500 border-slate-200 ${scoreHoverColors[val as keyof typeof scoreHoverColors]}`;
-
-                    return (
-                      <button
-                        key={val}
-                        onClick={() => handleSelect(q.id, val)}
-                        className={`${baseClasses} ${selectedClasses}`}
-                      >
-                        <span className="block text-lg leading-none mb-0.5">
-                          {val}
-                        </span>
-                        <span className="block text-[9px] scale-90 opacity-90">
-                          {scoreLabels[val as keyof typeof scoreLabels]}
-                        </span>
-                      </button>
-                    );
-                  })}
-                </div>
+                <div className="shrink-0 w-2.5 h-2.5 rounded-full bg-emerald-400" />
               </div>
-            );
-          })}
+            ))}
+          </div>
+        </div>
+      )}
+
+      {/* 底部操作 */}
+      <div className="pt-4 space-y-3">
+        {flaggedBehaviors.length > 0 && (
+          <Link
+            href={`/abc/?behaviors=${flaggedBehaviors.map((b) => b.behavior.id).join(",")}`}
+            className="flex items-center justify-center gap-2 w-full bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 text-white font-bold py-3.5 px-6 rounded-xl shadow-lg shadow-orange-200 transition-all active:scale-[0.98]"
+          >
+            <Sparkles size={20} />
+            <span>對全部關注行為進行 ABC+E 分析</span>
+            <ArrowRight size={20} />
+          </Link>
+        )}
+
+        <div className="grid grid-cols-2 gap-3">
+          <Link
+            href="/questionnaire/"
+            className="flex items-center justify-center gap-2 py-3 rounded-xl border-2 border-slate-200 text-slate-600 font-bold text-sm hover:border-slate-300 hover:bg-slate-50 transition-all"
+          >
+            <RefreshCw size={16} />
+            重新評估
+          </Link>
+          <Link
+            href="/"
+            className="flex items-center justify-center gap-2 py-3 rounded-xl border-2 border-slate-200 text-slate-600 font-bold text-sm hover:border-slate-300 hover:bg-slate-50 transition-all"
+          >
+            <BarChart3 size={16} />
+            返回首頁
+          </Link>
         </div>
       </div>
 
-      {/* 底部導航按鈕 */}
-      <div className="fixed bottom-0 left-0 right-0 glass border-t border-slate-200 p-4 z-40">
-        <div className="max-w-2xl mx-auto flex items-center gap-3">
-          <button
-            onClick={handlePrev}
-            disabled={currentSection === 0}
-            className="shrink-0 flex items-center gap-1 px-4 py-3 rounded-xl border-2 border-slate-200 text-slate-600 font-bold text-sm disabled:opacity-40 disabled:cursor-not-allowed hover:border-slate-300 hover:bg-slate-50 transition-all active:scale-95"
-          >
-            <ChevronLeft size={18} />
-            上一部分
-          </button>
-
-          <div className="flex-1 text-center">
-            <button
-              onClick={handleReset}
-              className="text-xs text-slate-400 hover:text-red-500 transition-colors flex items-center gap-1 mx-auto"
-            >
-              <RotateCcw size={12} />
-              清除重填
-            </button>
-          </div>
-
-          {currentSection < totalSections - 1 ? (
-            <button
-              onClick={handleNext}
-              className="shrink-0 flex items-center gap-1 px-5 py-3 rounded-xl bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 text-white font-bold text-sm shadow-lg shadow-orange-200 transition-all active:scale-95"
-            >
-              下一部分
-              <ChevronRight size={18} />
-            </button>
-          ) : (
-            <button
-              onClick={handleSubmit}
-              disabled={isSubmitting}
-              className="shrink-0 flex items-center gap-1.5 px-5 py-3 rounded-xl bg-gradient-to-r from-emerald-500 to-emerald-600 hover:from-emerald-600 hover:to-emerald-700 text-white font-bold text-sm shadow-lg shadow-emerald-200 transition-all active:scale-95 disabled:opacity-60"
-            >
-              {isSubmitting ? (
-                <>
-                  <Save size={18} className="animate-pulse" />
-                  分析中...
-                </>
-              ) : (
-                <>
-                  <CheckCircle2 size={18} />
-                  提交分析
-                </>
-              )}
-            </button>
-          )}
-        </div>
+      {/* 底部裝飾 */}
+      <div className="flex justify-center pt-4 opacity-40">
+        <CatSVG size={80} pose="sleeping" />
       </div>
     </div>
   );
