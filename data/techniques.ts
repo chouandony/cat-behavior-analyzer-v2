@@ -1,6 +1,7 @@
 export interface Technique {
   id: number;
   name: string;
+  subtitle: string;
   category: string;
   description: string;
   steps: string[];
@@ -14,6 +15,7 @@ export const techniques: Technique[] = [
   {
     id: 1,
     name: "響片訓練 (Clicker Training)",
+    subtitle: "建立精確行為標記，加速學習",
     category: "基礎溝通",
     description: "使用響片建立精確的行為標記，加速學習效率。",
     steps: [
@@ -31,6 +33,7 @@ export const techniques: Technique[] = [
   {
     id: 2,
     name: "環境豐富化 (Environmental Enrichment)",
+    subtitle: "優化居住環境，滿足身心需求",
     category: "環境管理",
     description: "透過優化居住環境，滿足貓咪的生理與心理需求。",
     steps: [
@@ -48,6 +51,7 @@ export const techniques: Technique[] = [
   {
     id: 3,
     name: "誘導獎勵法 (Lure & Reward)",
+    subtitle: "用零食引導目標動作",
     category: "基礎訓練",
     description: "使用零食引導貓咪做出目標動作，快速建立新行為。",
     steps: [
@@ -65,6 +69,7 @@ export const techniques: Technique[] = [
   {
     id: 4,
     name: "指定位置訓練 (Stationing)",
+    subtitle: "教導貓咪在特定地點待命",
     category: "行為管理",
     description: "教導貓咪在特定地點待命，用於門口管理與訪客應對。",
     steps: [
@@ -82,6 +87,7 @@ export const techniques: Technique[] = [
   {
     id: 5,
     name: "捕捉法 (Capturing)",
+    subtitle: "標記並獎勵自然好行為",
     category: "基礎訓練",
     description: "等待並標記貓咪自然出現的好行為，強化其發生頻率。",
     steps: [
@@ -99,6 +105,7 @@ export const techniques: Technique[] = [
   {
     id: 6,
     name: "差別增強 (Differential Reinforcement)",
+    subtitle: "獎勵替代行為，忽略問題行為",
     category: "行為矯正",
     description: "獎勵與問題行為不相容的替代行為，同時忽略問題行為。",
     steps: [
@@ -116,6 +123,7 @@ export const techniques: Technique[] = [
   {
     id: 7,
     name: "目標棒訓練 (Target Training)",
+    subtitle: "觸碰或跟隨目標棒訓練",
     category: "基礎溝通",
     description: "教導貓咪觸碰或跟隨目標棒，用於引導位置與轉移注意力。",
     steps: [
@@ -133,6 +141,7 @@ export const techniques: Technique[] = [
   {
     id: 8,
     name: "普馬克原則 (Premack Principle)",
+    subtitle: "用喜歡的行為獎勵必要行為",
     category: "進階訓練",
     description: "用貓咪喜歡的行為作為獎勵，強化不喜歡但必要的行為。",
     steps: [
@@ -150,6 +159,7 @@ export const techniques: Technique[] = [
   {
     id: 9,
     name: "不相容行為訓練 (Incompatible Behavior)",
+    subtitle: "教導無法同時進行問題行為的動作",
     category: "行為矯正",
     description: "教導貓咪一個無法同時進行問題行為的替代動作。",
     steps: [
@@ -167,6 +177,7 @@ export const techniques: Technique[] = [
   {
     id: 10,
     name: "暫停隔離 (Time-Out)",
+    subtitle: "短暫移至無趣環境冷靜",
     category: "行為矯正",
     description: "在攻擊或過度興奮時，將貓咪短暫移至無趣環境冷靜。",
     steps: [
@@ -184,6 +195,7 @@ export const techniques: Technique[] = [
   {
     id: 11,
     name: "減敏訓練 (Desensitization)",
+    subtitle: "極低強度反覆呈現恐懼源",
     category: "情緒調節",
     description: "以極低強度反覆呈現恐懼源，讓貓咪逐漸習慣並降低反應。",
     steps: [
@@ -201,6 +213,7 @@ export const techniques: Technique[] = [
   {
     id: 12,
     name: "反制約 (Counter-Conditioning)",
+    subtitle: "將負面聯結轉為正面",
     category: "情緒調節",
     description: "將負面聯結轉化為正面聯結，讓貓咪對恐懼源產生好感。",
     steps: [
@@ -218,6 +231,7 @@ export const techniques: Technique[] = [
   {
     id: 13,
     name: "合作照護 (Cooperative Care)",
+    subtitle: "教導貓咪主動參與護理",
     category: "基礎護理",
     description: "教導貓咪主動參與醫療與護理過程，降低壓力。",
     steps: [
@@ -235,6 +249,7 @@ export const techniques: Technique[] = [
   {
     id: 14,
     name: "自主接觸 (Choice & Control)",
+    subtitle: "讓貓咪控制互動程度",
     category: "進階訓練",
     description: "讓貓咪控制互動程度，提升自信心與信任感。",
     steps: [
@@ -252,6 +267,7 @@ export const techniques: Technique[] = [
   {
     id: 15,
     name: "互動式遊戲治療 (Interactive Play Therapy)",
+    subtitle: "結構化遊戲滿足捕獵需求",
     category: "行為管理",
     description: "透過結構化遊戲滿足捕獵需求，改善多種問題行為。",
     steps: [
@@ -269,6 +285,7 @@ export const techniques: Technique[] = [
   {
     id: 16,
     name: "益智餵食 (Food Puzzles)",
+    subtitle: "益智玩具延長進食時間",
     category: "環境豐富化",
     description: "使用益智玩具餵食，延長進食時間並提供心理刺激。",
     steps: [
@@ -286,6 +303,7 @@ export const techniques: Technique[] = [
   {
     id: 17,
     name: "貓抓板訓練 (Scratching Post Training)",
+    subtitle: "教導使用合法抓撓出口",
     category: "基礎訓練",
     description: "教導貓咪使用合法抓撓出口，保護家具。",
     steps: [
@@ -303,6 +321,7 @@ export const techniques: Technique[] = [
   {
     id: 18,
     name: "垂直空間設置 (Vertical Space)",
+    subtitle: "設置貓跳台滿足領域需求",
     category: "環境管理",
     description: "設置貓跳台與高處平台，滿足貓咪的領域與安全感需求。",
     steps: [
@@ -320,6 +339,7 @@ export const techniques: Technique[] = [
   {
     id: 19,
     name: "安全空間建立 (Safe Space)",
+    subtitle: "建立專屬安全區域",
     category: "環境管理",
     description: "建立讓貓咪感到安全的專屬區域，用於壓力管理。",
     steps: [
@@ -337,6 +357,7 @@ export const techniques: Technique[] = [
   {
     id: 20,
     name: "日常節律 (Daily Routine)",
+    subtitle: "建立可預測的日常節律",
     category: "行為管理",
     description: "建立可預測的日常節律，降低貓咪的焦慮與不確定感。",
     steps: [
@@ -354,6 +375,7 @@ export const techniques: Technique[] = [
   {
     id: 21,
     name: "門口禮儀 (Door Manners)",
+    subtitle: "教導門開啟時保持冷靜",
     category: "行為管理",
     description: "教導貓咪在門開啟時保持冷靜，防止衝門逃跑。",
     steps: [
@@ -371,6 +393,7 @@ export const techniques: Technique[] = [
   {
     id: 22,
     name: "砂盆優化 (Litter Box Setup)",
+    subtitle: "系統性優化砂盆設置",
     category: "環境管理",
     description: "系統性優化砂盆設置，解決排泄相關問題。",
     steps: [
@@ -389,6 +412,7 @@ export const techniques: Technique[] = [
   {
     id: 23,
     name: "氣味管理 (Scent Management)",
+    subtitle: "費洛蒙與氣味標記管理",
     category: "環境管理",
     description: "使用費洛蒙與氣味標記管理，降低環境壓力。",
     steps: [
@@ -406,6 +430,7 @@ export const techniques: Technique[] = [
   {
     id: 24,
     name: "墊子訓練 (Mat Training)",
+    subtitle: "教導在特定墊子休息",
     category: "行為管理",
     description: "教導貓咪在特定墊子上休息，用於訪客接待與餐桌禮儀。",
     steps: [
@@ -423,6 +448,7 @@ export const techniques: Technique[] = [
   {
     id: 25,
     name: "重新介紹 (Reintroduction)",
+    subtitle: "從極低強度重新介紹貓咪",
     category: "多貓管理",
     description: "將衝突貓咪完全隔離後，從極低強度開始重新介紹。",
     steps: [
@@ -441,6 +467,7 @@ export const techniques: Technique[] = [
   {
     id: 26,
     name: "資源分散 (Resource Dispersal)",
+    subtitle: "分散資源減少競爭",
     category: "多貓管理",
     description: "分散食物、水、砂盆等資源，減少多貓間的競爭。",
     steps: [
@@ -458,6 +485,7 @@ export const techniques: Technique[] = [
   {
     id: 27,
     name: "塑形法 (Shaping)",
+    subtitle: "逐步獎勵接近目標行為",
     category: "進階訓練",
     description: "逐步獎勵接近目標行為的小步驟，最終達成複雜行為。",
     steps: [
@@ -475,6 +503,7 @@ export const techniques: Technique[] = [
   {
     id: 28,
     name: "安靜指令 (Settle on Cue)",
+    subtitle: "教導指令下安靜躺下",
     category: "行為管理",
     description: "教導貓咪在指令下安靜躺下，用於過度興奮與焦慮情境。",
     steps: [
@@ -492,6 +521,7 @@ export const techniques: Technique[] = [
   {
     id: 29,
     name: "掠食遊戲 (Predatory Play)",
+    subtitle: "模擬完整掠食序列遊戲",
     category: "行為管理",
     description: "模擬完整掠食序列的遊戲，滿足貓咪的捕獵本能。",
     steps: [
@@ -509,6 +539,7 @@ export const techniques: Technique[] = [
   {
     id: 30,
     name: "醫療排查 (Medical Workup)",
+    subtitle: "優先排除生理疾病",
     category: "基礎排查",
     description: "優先排除生理疾病導致的行為問題，是所有行為治療的第一步。",
     steps: [
@@ -526,6 +557,7 @@ export const techniques: Technique[] = [
   {
     id: 31,
     name: "消退法 (Extinction)",
+    subtitle: "移除強化物讓行為消失",
     category: "行為矯正",
     description: "完全移除問題行為的強化物，讓行為自然消失。",
     steps: [
@@ -543,6 +575,7 @@ export const techniques: Technique[] = [
   {
     id: 32,
     name: "系統性減敏 (Systematic Desensitization)",
+    subtitle: "結合減敏與放鬆訓練",
     category: "情緒調節",
     description: "結合減敏與放鬆訓練，專門用於深度恐懼與焦慮。",
     steps: [
@@ -560,6 +593,7 @@ export const techniques: Technique[] = [
   {
     id: 33,
     name: "行為調整計畫 (Behavior Adjustment Plan)",
+    subtitle: "多管齊下的專業方案",
     category: "綜合方案",
     description: "針對複雜問題行為制定的多管齊下方案，通常需專業行為師指導。",
     steps: [
@@ -578,6 +612,7 @@ export const techniques: Technique[] = [
   {
     id: 34,
     name: "氣味交換 (Scent Swapping)",
+    subtitle: "交換氣味降低敵意",
     category: "多貓管理",
     description: "交換貓咪的氣味物品，讓彼此習慣對方氣味，降低敵意。",
     steps: [
@@ -595,6 +630,7 @@ export const techniques: Technique[] = [
   {
     id: 35,
     name: "專業諮詢 (Professional Consultation)",
+    subtitle: "尋求專業行為師協助",
     category: "綜合方案",
     description: "尋求獸醫行為醫學或合格貓科行為專業人員的協助。",
     steps: [
