@@ -1,369 +1,576 @@
 export interface Technique {
-  id: number
-  name: string
-  subtitle: string
-  category: '基礎訓練' | '行為改造' | '情緒調節' | '環境設計' | '進階應用' | '多貓管理' | '醫療照護'
-  purpose: string
-  applicable: string[]
-  method: string
-  tips: string
-  examples?: string[]
+  id: string;
+  name: string;
+  category: string;
+  description: string;
+  steps: string[];
+  bestFor: string[];
+  difficulty: "easy" | "medium" | "hard";
+  duration: string;
+  tools: string[];
 }
 
 export const techniques: Technique[] = [
   {
-    id: 1,
-    name: '環境管理',
-    subtitle: 'Environmental Management',
-    category: '環境設計',
-    purpose: '先阻止問題行為繼續演練，為後續訓練創造條件。',
-    applicable: ['抓沙發', '衝門', '亂尿', '多貓衝突', '咬電線', '偷吃', '翻垃圾', '攻擊'],
-    method: '保護家具、改變動線、使用圍欄或門欄、遮蔽窗戶、管理門口動線、避免高風險接觸、暫時限制活動範圍。',
-    tips: '管理不是逃避，而是讓貓咪不要一直練習錯誤行為。管理做得好，訓練成功率會大幅提升。',
-    examples: ['貓抓沙發 → 暫時保護沙發並在旁邊放置合適抓板', '貓衝門 → 使用圍欄隔離門口區域'],
+    id: "clicker-training",
+    name: "響片訓練 (Clicker Training)",
+    category: "基礎溝通",
+    description: "使用響片建立精確的行為標記，加速學習效率。",
+    steps: [
+      "先進行充電：按響片後立即給零食，重複10-20次直到貓咪聽到聲音就期待食物",
+      "在貓咪做出目標行為的瞬間按下響片",
+      "響片後立即給予零食（1秒內）",
+      "逐步將行為連結到指令詞",
+      "最終淡出響片與零食，改為間歇性獎勵"
+    ],
+    bestFor: ["aggression", "hyperactivity", "attention", "social", "escaping"],
+    difficulty: "easy",
+    duration: "1-2週基礎建立",
+    tools: ["響片", "高價值零食"]
   },
   {
-    id: 2,
-    name: '環境豐富化',
-    subtitle: 'Environmental Enrichment',
-    category: '環境設計',
-    purpose: '貓咪行為改造的核心技術。滿足需求，減少無聊、破壞、焦慮與過度興奮。',
-    applicable: ['拆家', '無聊', '過度興奮', '焦慮', '精力過剩', '過度喵叫', '抓沙發'],
-    method: '增加貓跳台、高處、隧道、紙箱、躲藏處、抓板、玩具、食物益智器、窗邊觀察點、嗅聞探索機會。',
-    tips: '很多行為問題不是不聽話，而是生活太無聊或需求沒有出口。豐富化是預防行為問題的最佳投資。',
+    id: "target-training",
+    name: "目標棒訓練 (Target Training)",
+    category: "基礎溝通",
+    description: "教導貓咪觸碰或跟隨目標棒，用於引導位置與轉移注意力。",
+    steps: [
+      "將目標棒（或手指）放在貓咪面前5公分處",
+      "當貓咪靠近或觸碰目標時，立即標記並獎勵",
+      "逐步增加距離與高度，引導貓咪移動",
+      "加入指令詞碰或目標",
+      "應用於引導貓咪離開禁止區域或前往指定位置"
+    ],
+    bestFor: ["aggression", "destructive", "escaping", "hyperactivity"],
+    difficulty: "easy",
+    duration: "3-7天",
+    tools: ["目標棒/手指", "零食"]
   },
   {
-    id: 3,
-    name: '正向增強',
-    subtitle: 'Positive Reinforcement',
-    category: '基礎訓練',
-    purpose: '讓好行為增加，建立貓咪對正確選擇的動機。',
-    applicable: ['基礎服從', '使用抓板', '進籠', '坐下', '安靜', '自主接觸', '合作照護'],
-    method: '貓咪做出目標行為後，給予食物、玩具、嗅聞機會、距離、互動等牠真正想要的東西。',
-    tips: '獎勵必須是「從貓的角度來看有價值的東西」，而非你認為好的東西。高干擾環境需要更高價值的獎勵。',
+    id: "stationing",
+    name: "指定位置訓練 (Stationing)",
+    category: "行為管理",
+    description: "教導貓咪在特定地點待命，用於門口管理與訪客應對。",
+    steps: [
+      "選擇一個貓咪喜歡的高處平台或墊子作為指定位置",
+      "引導貓咪跳上平台，標記並獎勵",
+      "逐步增加待在平台上的時間",
+      "加入指令詞上去或待命",
+      "在門鈴響或開門時，先引導貓咪前往指定位置再處理門口事務"
+    ],
+    bestFor: ["escaping", "social", "intercat", "aggression"],
+    difficulty: "medium",
+    duration: "1-2週",
+    tools: ["貓跳台/墊子", "零食", "響片"]
   },
   {
-    id: 4,
-    name: '響片標記訓練',
-    subtitle: 'Clicker / Marker Training',
-    category: '基礎訓練',
-    purpose: '精準標記貓咪做對的瞬間，建立清晰的溝通橋樑。',
-    applicable: ['所有技能訓練', '替代行為建立', '進籠訓練', '合作照護', 'target訓練'],
-    method: '使用響片或固定口頭詞（如「好棒」），在貓咪做出正確動作的瞬間標記，接著立即給予獎勵。',
-    tips: '響片不是命令，不是召喚器，也不是魔法。真正重要的是標記時機與獎勵策略。標記必須在 1 秒內完成。',
+    id: "desensitization",
+    name: "減敏訓練 (Desensitization)",
+    category: "情緒調節",
+    description: "以極低強度反覆呈現恐懼源，讓貓咪逐漸習慣並降低反應。",
+    steps: [
+      "確定貓咪的恐懼閾值（剛好不會害怕的距離/強度）",
+      "在閾值以下呈現觸發物1-2秒",
+      "觀察貓咪反應：應保持放鬆（耳朵向前、尾巴自然）",
+      "重複多次，每次結束後給予獎勵",
+      "當貓咪完全無反應時，逐步增加強度（縮短距離、提高音量）"
+    ],
+    bestFor: ["fear", "social", "aggression", "intercat"],
+    difficulty: "medium",
+    duration: "數週至數月",
+    tools: ["觸發物（錄音/圖片/實物）", "高價值零食", "計時器"]
   },
   {
-    id: 5,
-    name: '捕捉 Capturing',
-    subtitle: 'Capturing',
-    category: '基礎訓練',
-    purpose: '捕捉自然出現的好行為，讓貓咪知道這些行為是被鼓勵的。',
-    applicable: ['安靜', '放鬆', '自動看主人', '自動坐下', '使用抓板', '自己進籠'],
-    method: '貓咪自然做出好行為時，立刻標記並獎勵。不需要引導或誘導，純粹等待並捕捉。',
-    tips: '這是建立「自動好行為」的最佳方式。隨身攜帶獎勵，看到好行為就捕捉，效果驚人。',
+    id: "counter-conditioning",
+    name: "反制約 (Counter-Conditioning)",
+    category: "情緒調節",
+    description: "將負面聯結轉化為正面聯結，讓貓咪對恐懼源產生好感。",
+    steps: [
+      "確認恐懼源（如吸塵器、陌生人）",
+      "在恐懼源出現的同時，給予貓咪最喜愛的食物或遊戲",
+      "恐懼源消失時，立即停止零食/遊戲",
+      "重複配對直到貓咪聽到/看到恐懼源就期待好事",
+      "逐步增加恐懼源強度，同時維持正面聯結"
+    ],
+    bestFor: ["fear", "aggression", "social", "intercat"],
+    difficulty: "medium",
+    duration: "2-8週",
+    tools: ["高價值零食", "恐懼源（可控版本）"]
   },
   {
-    id: 6,
-    name: '塑造 Shaping',
-    subtitle: 'Shaping',
-    category: '基礎訓練',
-    purpose: '把複雜行為拆解成小步驟，讓貓咪逐步學會。',
-    applicable: ['進外出籠', '合作照護', '複雜技能', '跳上指定位置'],
-    method: '獎勵每一個更接近目標的小動作，逐步提升標準，直到完成完整行為。',
-    tips: '如果貓咪一直錯，代表步驟太大，不是貓笨。把標準切得更細，成功率會明顯提升。',
+    id: "extinction",
+    name: "消退法 (Extinction)",
+    category: "行為矯正",
+    description: "完全移除問題行為的強化物，讓行為自然消失。",
+    steps: [
+      "確定問題行為的強化物（如：喵叫->獲得食物、抓門->主人開門）",
+      "徹底且一致地移除強化物",
+      "預期消退爆發：行為在改善前可能暫時惡化",
+      "堅持不懈，全家統一執行",
+      "同時教導貓咪替代行為（如：安靜時才給食物）"
+    ],
+    bestFor: ["vocalization", "attention", "destructive"],
+    difficulty: "hard",
+    duration: "2-6週",
+    tools: ["耐心", "全家一致性", "替代行為計畫"]
   },
   {
-    id: 7,
-    name: '目標訓練 Target Training',
-    subtitle: 'Target Training',
-    category: '基礎訓練',
-    purpose: '讓貓咪碰觸目標物，是非常適合貓的核心導航工具。',
-    applicable: ['進籠', '上跳台', '回指定位置', '移動', '轉身', '合作醫療', '看診準備'],
-    method: '使用 target stick、手指或小目標物，讓貓咪鼻子碰觸目標後標記並獎勵。',
-    tips: 'Target 是緊急狀況下的救命工具。當貓咪即將衝向危險時，一個 Target 可以讓牠轉身回到你身邊。',
+    id: "differential-reinforcement",
+    name: "差別增強 (Differential Reinforcement)",
+    category: "行為矯正",
+    description: "獎勵與問題行為不相容的替代行為，同時忽略問題行為。",
+    steps: [
+      "選擇一個與問題行為互斥的替代行為（如：安靜躺臥 vs 過度喵叫）",
+      "在替代行為出現時立即給予高價值獎勵",
+      "完全忽略問題行為（不看不說不摸）",
+      "逐步延長替代行為所需的持續時間",
+      "在不同情境中練習，達到泛化"
+    ],
+    bestFor: ["attention", "vocalization", "hyperactivity", "destructive"],
+    difficulty: "medium",
+    duration: "2-4週",
+    tools: ["高價值零食", "響片", "觀察記錄表"]
   },
   {
-    id: 8,
-    name: '指定位置訓練 Station Training',
-    subtitle: 'Station Training',
-    category: '基礎訓練',
-    purpose: '建立「這個位置是安全、舒服、值得待的地方」。',
-    applicable: ['吃飯', '訪客', '清潔', '門口管理', '多貓分流', '看獸醫前準備'],
-    method: '引導貓咪到指定位置（貓墊、跳台、椅子），標記並獎勵。逐步增加停留時間和干擾。',
-    tips: '指定位置應該代表安全與好事，不是處罰區。當環境太混亂時，這裡是貓咪的避風港。',
+    id: "shaping",
+    name: "塑形法 (Shaping)",
+    category: "進階訓練",
+    description: "逐步獎勵接近目標行為的小步驟，最終達成複雜行為。",
+    steps: [
+      "確定最終目標行為（如：自願進入外出籠）",
+      "將目標分解為微小步驟：看籠子->走向籠子->靠近籠子->頭進籠子->前腳進籠子->全身進籠子",
+      "從第一步開始，只獎勵當前步驟",
+      "當貓咪穩定完成當前步驟後，提高標準至下一步",
+      "每個小步驟都給予獎勵，最終連結成完整行為"
+    ],
+    bestFor: ["fear", "social", "aggression", "escaping"],
+    difficulty: "hard",
+    duration: "數週至數月",
+    tools: ["響片", "零食", "分解計畫表"]
   },
   {
-    id: 9,
-    name: '替代行為',
-    subtitle: 'Alternative Behavior',
-    category: '行為改造',
-    purpose: '教貓咪用更好的行為達到同樣功能，是行為改造最重要的技術之一。',
-    applicable: ['撲人', '咬手', '抓沙發', '跳桌', '討食', '亂咬'],
-    method: '找出問題行為的功能，教一個能達到同樣目的但更安全的行為，並大量獎勵這個替代行為。',
-    tips: '替代行為必須能滿足貓咪原本的需求，否則不會成功。',
-    examples: ['抓沙發 → 抓貓抓板', '咬手 → 咬玩具', '跳桌 → 跳貓跳台', '衝門 → 去指定位置'],
+    id: "lure-reward",
+    name: "誘導獎勵法 (Lure & Reward)",
+    category: "基礎訓練",
+    description: "使用零食引導貓咪做出目標動作，快速建立新行為。",
+    steps: [
+      "手持高價值零食，放在貓咪鼻前讓其聞到",
+      "緩慢移動零食引導貓咪跟隨（如：向上引導坐下，向側引導轉身）",
+      "當貓咪完成目標動作時，立即給予該零食",
+      "重複5-10次後，嘗試加入手勢或口令",
+      "逐步減少零食引導，改為手勢/口令+隨機獎勵"
+    ],
+    bestFor: ["hyperactivity", "attention", "social", "destructive"],
+    difficulty: "easy",
+    duration: "1-3天/動作",
+    tools: ["高價值零食", "安靜環境"]
   },
   {
-    id: 10,
-    name: '重新導向 Redirect',
-    subtitle: 'Redirect',
-    category: '行為改造',
-    purpose: '問題行為剛開始出現時，不要與貓爭鬥，把行為導向合法出口。',
-    applicable: ['追腳', '咬手', '抓沙發', '過度興奮', '玩耍攻擊'],
-    method: '當貓咪開始出現問題行為時，立即提供互動玩具、抓板或其他合法出口。',
-    tips: '重新導向的關鍵是「時機」——在問題行為剛開始時介入，而不是等到行為升級。',
+    id: "capturing",
+    name: "捕捉法 (Capturing)",
+    category: "基礎訓練",
+    description: "等待並標記貓咪自然出現的好行為，強化其發生頻率。",
+    steps: [
+      "隨身攜帶零食與響片",
+      "觀察貓咪自然出現的目標行為（如：安靜躺臥、自己玩玩具）",
+      "在行為出現的瞬間按下響片",
+      "立即給予零食獎勵",
+      "加入指令詞，讓貓咪將詞語與行為連結"
+    ],
+    bestFor: ["attention", "hyperactivity", "destructive", "compulsive"],
+    difficulty: "easy",
+    duration: "持續進行",
+    tools: ["響片", "隨身零食袋"]
   },
   {
-    id: 11,
-    name: '系統減敏感',
-    subtitle: 'Systematic Desensitization',
-    category: '情緒調節',
-    purpose: '讓貓咪逐步習慣原本害怕或激動的刺激，降低情緒反應。',
-    applicable: ['外出籠恐懼', '車子恐懼', '吸塵器恐懼', '剪指甲恐懼', '梳毛恐懼', '陌生人恐懼', '門鈴恐懼'],
-    method: '從很低強度開始（很遠的距離、很小的音量、很短的時間），逐步增加強度，讓貓咪慢慢適應。',
-    tips: '貓咪必須全程低於閾值（還能吃零食、能回頭）。太快太強就是「洪水法」，可能惡化問題。',
+    id: "interactive-play",
+    name: "互動式遊戲治療 (Interactive Play Therapy)",
+    category: "行為管理",
+    description: "透過結構化遊戲滿足捕獵需求，改善多種問題行為。",
+    steps: [
+      "每日固定時間進行2-3次遊戲",
+      "使用逗貓棒模擬獵物：地面爬行->空中飛舞->躲藏",
+      "讓貓咪多次成功撲擊，避免挫折",
+      "遊戲結尾讓貓咪殺死獵物，給予滿足感",
+      "結束後立即提供小餐點，完成捕獵-進食-睡眠循環"
+    ],
+    bestFor: ["hyperactivity", "aggression", "destructive", "attention"],
+    difficulty: "easy",
+    duration: "每日進行，持續終身",
+    tools: ["逗貓棒", "踢踢玩具", "零食"]
   },
   {
-    id: 12,
-    name: '反制約',
-    subtitle: 'Counter-Conditioning',
-    category: '情緒調節',
-    purpose: '改變貓咪對刺激的情緒反應，從負面變成正面。',
-    applicable: ['陌生人恐懼', '外出籠焦慮', '剪指甲恐懼', '獸醫恐懼', '多貓緊張', '雷聲恐懼'],
-    method: '讓原本引發負面情緒的刺激，與極度美好的事物（最高價值零食）同時出現。',
-    tips: '核心邏輯：讓刺激從「壞事預告」變成「好事預告」。順序很重要：刺激先出現，好事才出現。',
-    examples: ['外出籠出現 → 好吃零食出現', '剪指甲工具出現 → 零食出現', '另一隻貓出現 → 距離+食物'],
+    id: "food-puzzle",
+    name: "益智餵食 (Food Puzzles)",
+    category: "環境豐富化",
+    description: "使用益智玩具餵食，延長進食時間並提供心理刺激。",
+    steps: [
+      "從簡單的益智球或漏食玩具開始",
+      "將每日部分乾糧放入益智玩具",
+      "觀察貓咪使用情況，調整難度",
+      "逐步引入更複雜的益智玩具（滑動拼圖、旋轉盤）",
+      "輪流使用不同玩具，保持新鮮感"
+    ],
+    bestFor: ["hyperactivity", "destructive", "attention", "separation", "compulsive"],
+    difficulty: "easy",
+    duration: "持續進行",
+    tools: ["益智餵食玩具", "乾糧/零食"]
   },
   {
-    id: 13,
-    name: '合作照護 Cooperative Care',
-    subtitle: 'Cooperative Care',
-    category: '醫療照護',
-    purpose: '讓貓咪願意參與照護流程，減少醫療恐懼與抗拒。',
-    applicable: ['剪指甲', '梳毛', '洗澡', '看診', '點耳藥', '刷牙', '身體檢查'],
-    method: '建立同意訊號和暫停訊號。例如：下巴靠手表示「可以開始」，離開表示「暫停」。',
-    tips: '不要用零食騙貓靠近後突然抓住，這會破壞信任。貓咪必須有說「不」的權利。',
+    id: "scent-swapping",
+    name: "氣味交換 (Scent Swapping)",
+    category: "多貓管理",
+    description: "交換貓咪的氣味物品，讓彼此習慣對方氣味，降低敵意。",
+    steps: [
+      "收集每隻貓的氣味（用毛巾擦拭臉頰與身側）",
+      "將A貓的毛巾放在B貓的環境中（遠處開始）",
+      "觀察B貓反應：若放鬆則給予獎勵；若緊張則放更遠",
+      "隔天交換，將B貓毛巾放在A貓環境",
+      "逐步將氣味物品靠近貓咪的休息與進食區"
+    ],
+    bestFor: ["intercat", "social", "fear"],
+    difficulty: "easy",
+    duration: "1-2週",
+    tools: ["乾淨毛巾", "零食"]
   },
   {
-    id: 14,
-    name: '自主接觸 Consent-based Handling',
-    subtitle: 'Consent-based Handling',
-    category: '基礎訓練',
-    purpose: '讓貓咪控制自己接受多少接觸，減少強迫處理帶來的壓力。',
-    applicable: ['撫摸誘發攻擊', '害怕被抱', '看診緊張', '日常互動'],
-    method: '貓靠近時可以摸，貓離開時停止，貓回來時繼續。讓貓控制互動程度。',
-    tips: '多數貓偏好控制自己接受多少接觸，強迫 handling 可能增加壓力與防禦行為。',
+    id: "barrier-feeding",
+    name: "隔離餵食 (Barrier Feeding)",
+    category: "多貓管理",
+    description: "讓貓咪在視線阻隔但可聽到/聞到對方的情況下同時進食。",
+    steps: [
+      "使用門或柵欄將衝突貓咪分隔",
+      "在門的兩側同時放置食物",
+      "剛開始距離較遠，逐步靠近門縫",
+      "若任何一方表現緊張，增加距離",
+      "當雙方都能在門前放鬆進食時，嘗試開門縫讓彼此看到"
+    ],
+    bestFor: ["intercat", "aggression"],
+    difficulty: "medium",
+    duration: "2-4週",
+    tools: ["嬰兒門/柵欄", "食物碗"]
   },
   {
-    id: 15,
-    name: '玩耍-掠食序列',
-    subtitle: 'Predatory Play Sequence',
-    category: '環境設計',
-    purpose: '模擬完整掠食行為，滿足貓咪天性需求。',
-    applicable: ['玩耍攻擊', '追腳', '無聊', '精力過剩', '夜間暴衝'],
-    method: '模擬搜尋→潛伏→追逐→撲抓→捕獲→吃東西→休息的完整序列。使用互動玩具而非雷射筆。',
-    tips: '一直拿雷射筆讓貓追一個永遠抓不到的光點，會造成挫折。應讓貓有「捕獲」的滿足感。',
+    id: "time-out",
+    name: "暫停隔離 (Time-Out)",
+    category: "行為矯正",
+    description: "在攻擊或過度興奮時，將貓咪短暫移至無趣環境冷靜。",
+    steps: [
+      "選擇一個安全但無趣的房間（無玩具、無景觀、無人陪伴）",
+      "在攻擊行為發生瞬間，平靜地將貓咪抱至冷靜房間",
+      "隔離時間1-2分鐘（不可過長，否則貓咪會忘記原因）",
+      "釋放時保持低調，不給予額外關注",
+      "重複直到貓咪學會控制攻擊衝動"
+    ],
+    bestFor: ["aggression", "hyperactivity", "intercat"],
+    difficulty: "medium",
+    duration: "1-3週",
+    tools: ["冷靜房間", "計時器"]
   },
   {
-    id: 16,
-    name: '尋食行為 Foraging',
-    subtitle: 'Foraging',
-    category: '環境設計',
-    purpose: '讓貓咪「工作」取得部分食物，提供探索與認知刺激。',
-    applicable: ['無聊', '過度喵叫', '精力過剩', '肥胖管理', '焦慮'],
-    method: '把食物分散在食物玩具、紙箱、藏食點、簡單益智餵食器中，讓貓搜尋與探索。',
-    tips: '尋食能同時提供探索、掠食與認知刺激，是環境豐富化的重要一環。',
+    id: "jackpot-reward",
+    name: "大獎獎勵 (Jackpot Reward)",
+    category: "進階訓練",
+    description: "在貓咪做出特別困難或重要的好行為時，給予超大獎勵。",
+    steps: [
+      "準備大獎零食（如雞肉泥、鮪魚）",
+      "平時使用普通零食訓練",
+      "當貓咪在困難情境中做出正確選擇（如：訪客來訪時保持冷靜）",
+      "給予連續多口大獎零食，並搭配興奮的語氣讚美",
+      "讓貓咪明確知道這個行為特別值得"
+    ],
+    bestFor: ["fear", "social", "aggression", "escaping"],
+    difficulty: "easy",
+    duration: "即時應用",
+    tools: ["大獎零食（雞肉泥/鮪魚）"]
   },
   {
-    id: 17,
-    name: '抓撓訓練 Scratching Training',
-    subtitle: 'Scratching Training',
-    category: '行為改造',
-    purpose: '不是消滅抓撓，而是引導到合適的地方。',
-    applicable: ['抓沙發', '抓地毯', '抓牆壁', '氣味標記'],
-    method: '保護家具 + 提供合適抓面 + 提升抓板吸引力。嘗試不同材質、高度、方向與位置。',
-    tips: '抓板最好放在貓本來就喜歡抓的位置附近。垂直抓與水平抓的偏好可能不同。',
+    id: "habituation",
+    name: "習慣化 (Habituation)",
+    category: "情緒調節",
+    description: "讓貓咪長時間低強度接觸刺激物，直到自然習慣。",
+    steps: [
+      "選擇貓咪輕微敏感的刺激（如門鈴錄音、外出籠）",
+      "以極低強度持續呈現（如門鈴音量調至最小）",
+      "不給予任何反應（不安慰也不責罵），讓貓咪自行適應",
+      "每天重複15-30分鐘",
+      "當貓咪完全無反應時，逐步增加強度"
+    ],
+    bestFor: ["fear", "social", "vocalization"],
+    difficulty: "easy",
+    duration: "1-4週",
+    tools: ["錄音/實物", "計時器"]
   },
   {
-    id: 18,
-    name: '垂直空間訓練',
-    subtitle: 'Vertical Space',
-    category: '環境設計',
-    purpose: '很多貓的「搗蛋」其實是缺少三維空間。',
-    applicable: ['跳櫃子', '跳餐桌', '多貓緊張', '害怕', '無聊'],
-    method: '提供貓跳台、層板、櫃頂安全平台、窗邊平台、高處休息區。',
-    tips: '尤其多貓家庭更重要。垂直空間能讓貓咪增加領域感與安全感。',
+    id: "mat-training",
+    name: "墊子訓練 (Mat Training)",
+    category: "行為管理",
+    description: "教導貓咪在特定墊子上休息，用於訪客接待與餐桌禮儀。",
+    steps: [
+      "選擇一塊專用墊子或毛巾",
+      "將墊子放在貓咪常休息處，當貓咪踏上時標記獎勵",
+      "逐步將墊子移動到目標位置（如餐桌旁、門口）",
+      "加入指令詞墊子或去你的床",
+      "在需要貓咪離開某處時，引導至墊子並獎勵"
+    ],
+    bestFor: ["attention", "social", "destructive", "escaping"],
+    difficulty: "easy",
+    duration: "1週",
+    tools: ["專用墊子/毛巾", "零食"]
   },
   {
-    id: 19,
-    name: '躲藏與安全區',
-    subtitle: 'Hiding & Safe Zones',
-    category: '環境設計',
-    purpose: '不要把躲藏視為「牠怎麼又躲起來？」躲藏本身是正常的安全行為。',
-    applicable: ['害怕', '焦慮', '多貓壓力', '訪客來訪', '環境變化'],
-    method: '提供紙箱、隧道、高處躲藏處、安靜房間。讓貓知道有地方可以退避。',
-    tips: '真正需要處理的是「為什麼牠現在需要一直躲？」如果是壓力，就處理壓力來源。',
+    id: "incompatible-behavior",
+    name: "不相容行為訓練 (Incompatible Behavior)",
+    category: "行為矯正",
+    description: "教導貓咪一個無法同時進行問題行為的替代動作。",
+    steps: [
+      "確定問題行為（如：抓沙發）",
+      "選擇不相容行為（如：抓貓抓板——貓無法同時抓沙發與抓板）",
+      "在貓咪可能抓沙發的情境前，引導至抓板",
+      "在抓板上給予大量獎勵",
+      "讓抓板比沙發更有吸引力（位置、材質、貓草）"
+    ],
+    bestFor: ["destructive", "aggression", "attention", "toileting"],
+    difficulty: "medium",
+    duration: "2-4週",
+    tools: ["替代物品", "零食", "貓草"]
   },
   {
-    id: 20,
-    name: '日常節律 Routine Training',
-    subtitle: 'Routine Training',
-    category: '基礎訓練',
-    purpose: '貓很重視可預測性。穩定的生活節奏能降低壓力。',
-    applicable: ['焦慮', '過度喵叫', '夜間暴衝', '分離問題', '環境變化適應'],
-    method: '建立固定餵食、固定遊戲、固定休息、固定互動的日常節奏。',
-    tips: '穩定而一致的生活節律能降低壓力，例行改變可能引發焦慮與行為問題。',
+    id: "systematic-desensitization",
+    name: "系統性減敏 (Systematic Desensitization)",
+    category: "情緒調節",
+    description: "結合減敏與放鬆訓練，專門用於深度恐懼與焦慮。",
+    steps: [
+      "先教導貓咪一個放鬆信號（如：在特定墊子上=放鬆時間）",
+      "在貓咪完全放鬆時，以最低強度呈現恐懼源",
+      "若貓咪保持放鬆，持續並逐步增加強度",
+      "若貓咪緊張，立即降低強度並回到放鬆狀態",
+      "每次訓練以成功維持放鬆結束"
+    ],
+    bestFor: ["fear", "aggression", "social", "separation"],
+    difficulty: "hard",
+    duration: "數週至數月",
+    tools: ["放鬆墊子", "恐懼源", "零食", "費洛蒙"]
   },
   {
-    id: 21,
-    name: '衝門管理 Door-Dart Management',
-    subtitle: 'Door-Dart Management',
-    category: '行為改造',
-    purpose: '管理 + 指定位置 + 響片 + 替代活動，防止貓咪反覆成功衝門。',
-    applicable: ['開門衝出去', '聽到門聲就衝', '外出逃脫'],
-    method: '先避免貓反覆成功衝門，再訓練：門關閉→指定位置→獎勵。逐步增加開門難度。',
-    tips: '衝門管理需要環境管理與訓練並行。一旦貓成功衝出去，行為會被極度強化。',
+    id: "behavioral-adjustment",
+    name: "行為調整計畫 (Behavior Adjustment Plan)",
+    category: "綜合方案",
+    description: "針對複雜問題行為制定的多管齊下方案，通常需專業行為師指導。",
+    steps: [
+      "完整記錄問題行為的ABC（前因-行為-後果）",
+      "識別所有強化物與觸發因子",
+      "同時執行環境管理、行為矯正與情緒調節",
+      "設定可量化的階段性目標",
+      "每週檢視進度並調整策略",
+      "必要時與獸醫行為師合作，評估藥物輔助"
+    ],
+    bestFor: ["aggression", "compulsive", "separation", "intercat"],
+    difficulty: "hard",
+    duration: "數月",
+    tools: ["行為記錄表", "專業諮詢", "可能的藥物輔助"]
   },
   {
-    id: 22,
-    name: '砂盆偏好建立',
-    subtitle: 'Litter Box Preference',
-    category: '環境設計',
-    purpose: '建立貓咪喜歡且容易使用的排泄環境。',
-    applicable: ['亂尿', '砂盆外排泄', '標記行為', '多貓家庭'],
-    method: '考慮位置、清潔、砂的種類、砂盆大小、入口、是否容易被其他貓堵住。使用 N+1 原則。',
-    tips: '重點不是「把貓抓進砂盆」，而是建立容易進入+安全+乾淨+貓喜歡的排泄環境。',
+    id: "pheromone-therapy",
+    name: "費洛蒙療法 (Pheromone Therapy)",
+    category: "環境管理",
+    description: "使用人工合成的貓咪費洛蒙，營造安全與放鬆的環境氛圍。",
+    steps: [
+      "選擇適合的費洛蒙產品（擴散器、噴霧、項圈）",
+      "擴散器應覆蓋貓咪主要活動區域（每50-70平方公尺一個）",
+      "持續使用至少4週才能評估效果",
+      "在預期壓力事件前，於特定區域噴灑噴霧型費洛蒙",
+      "可與其他行為治療並行使用"
+    ],
+    bestFor: ["fear", "intercat", "separation", "compulsive", "toileting"],
+    difficulty: "easy",
+    duration: "持續使用",
+    tools: ["費洛蒙擴散器/噴霧", "電源插座"]
   },
   {
-    id: 23,
-    name: '居家排泄問題分析',
-    subtitle: 'House-soiling Analysis',
-    category: '環境設計',
-    purpose: '看到亂尿，第一個問題不是「怎麼處罰？」而是「這是醫療、排泄偏好、標記、壓力，還是砂盆問題？」',
-    applicable: ['亂尿', '亂便', '噴尿', '砂盆外排泄'],
-    method: '醫療排查 + 砂盆評估 + 位置 + 清潔 + 砂材 + 數量與分散 + 多貓衝突分析 + 環境壓力 + 氣味清除。',
-    tips: '砂盆外排泄是需要診斷原因的症狀，不是「貓故意搗蛋」。責罵可能讓貓學會躲起來排泄。',
+    id: "environmental-enrichment",
+    name: "環境豐富化 (Environmental Enrichment)",
+    category: "環境管理",
+    description: "透過優化居住環境，滿足貓咪的生理與心理需求。",
+    steps: [
+      "設置垂直空間：貓跳台、書架、窗台床",
+      "提供隱蔽處：紙箱、隧道、高處平台",
+      "設置觀景窗：餵鳥器、魚缸、戶外貓帳篷",
+      "輪流替換玩具，每週引入新刺激",
+      "確保有充足的抓撓出口與獨處空間"
+    ],
+    bestFor: ["hyperactivity", "destructive", "attention", "compulsive", "separation"],
+    difficulty: "easy",
+    duration: "持續進行",
+    tools: ["貓跳台", "紙箱", "玩具", "窗台床"]
   },
   {
-    id: 24,
-    name: '噴尿問題處理',
-    subtitle: 'Urine Marking',
-    category: '行為改造',
-    purpose: '需要區分「排泄」與「尿液標記」。標記通常具有不同的姿勢與情境。',
-    applicable: ['噴尿', '尿液標記', '領域壓力', '多貓衝突'],
-    method: '醫療排查 + 標記與排泄區分 + 絕育狀態 + 領域壓力 + 外貓刺激 + 資源增加 + 氣味管理 + 環境安全感。',
-    tips: '噴尿不是單純責罵能解決的。需要系統性分析領域壓力與多貓關係。',
+    id: "litter-box-optimization",
+    name: "砂盆優化方案 (Litter Box Optimization)",
+    category: "環境管理",
+    description: "系統性優化砂盆設置，解決排泄相關問題。",
+    steps: [
+      "遵循N+1原則設置砂盆數量",
+      "測試不同貓砂類型（凝結、礦砂、豆腐砂、松木砂）",
+      "砂盆尺寸應為貓咪身長1.5倍",
+      "放置於安靜、通風、易達且遠離食物的位置",
+      "每日清理，每週徹底清洗",
+      "開放式與封閉式並存，觀察貓咪偏好"
+    ],
+    bestFor: ["toileting"],
+    difficulty: "easy",
+    duration: "1-2週測試期",
+    tools: ["多種貓砂", "大尺寸砂盆", "酵素清潔劑"]
   },
   {
-    id: 25,
-    name: '多貓緊張管理',
-    subtitle: 'Intercat Tension Management',
-    category: '多貓管理',
-    purpose: '不要只看「有沒有打架？」更要觀察隱性緊張訊號。',
-    applicable: ['多貓盯視', '阻擋', '追逐', '躲藏', '改變路線', '尿液標記', '不敢使用砂盆'],
-    method: '分離 + 安全 + 醫療排查 + 找觸發物 + 資源分散 + 視覺阻隔 + 重新介紹 + 費洛蒙輔助。',
-    tips: '多貓家庭的緊張可能非常細微，即使沒有明顯打架，也可能持續造成壓力。',
+    id: "medical-workup",
+    name: "醫療排查 (Medical Workup)",
+    category: "基礎排查",
+    description: "優先排除生理疾病導致的行為問題，是所有行為治療的第一步。",
+    steps: [
+      "預約獸醫進行全面健康檢查",
+      "根據症狀進行針對性檢查（尿液分析、血液檢查、X光、超音波）",
+      "詳細記錄行為問題的時間、頻率與情境，提供獸醫參考",
+      "若確診疾病，優先治療生理問題",
+      "治療後追蹤行為是否改善"
+    ],
+    bestFor: ["toileting", "aggression", "vocalization", "compulsive"],
+    difficulty: "easy",
+    duration: "1-2週",
+    tools: ["獸醫預約", "行為記錄", "醫療報告"]
   },
   {
-    id: 26,
-    name: '多貓資源分散',
-    subtitle: 'Resource Dispersal',
-    category: '多貓管理',
-    purpose: '資源需要分散，而不是集中。多貓家庭的核心管理原則。',
-    applicable: ['多貓衝突', '資源競爭', '砂盆外排泄', '不敢吃飯', '不敢休息'],
-    method: '食物、水、砂盆、睡眠區、抓板、玩耍區都要分散放置，避免被單一貓咪封鎖。',
-    tips: '不要只問「我有兩個砂盆，夠嗎？」更應問「牠們能不能安全、獨立地使用？」',
+    id: "progressive-relaxation",
+    name: "漸進式放鬆訓練 (Progressive Relaxation)",
+    category: "情緒調節",
+    description: "教導貓咪在特定信號下進入放鬆狀態，用於焦慮管理。",
+    steps: [
+      "選擇一個安靜房間與專用墊子",
+      "在貓咪已經放鬆時，輕輕撫摸並給予零食，建立墊子=放鬆的聯結",
+      "加入放鬆信號（如輕柔音樂、特定口令）",
+      "每天固定時間進行5-10分鐘放鬆練習",
+      "在壓力事件前，引導貓咪至放鬆墊子並播放信號"
+    ],
+    bestFor: ["fear", "separation", "compulsive", "social"],
+    difficulty: "medium",
+    duration: "2-4週",
+    tools: ["放鬆墊子", "輕柔音樂", "零食"]
   },
   {
-    id: 27,
-    name: '轉移性攻擊',
-    subtitle: 'Redirected Aggression',
-    category: '情緒調節',
-    purpose: '窗外陌生貓出現→家貓高度興奮→無法接近刺激→轉移攻擊附近的人或貓。',
-    applicable: ['突然攻擊', '無預警咬人', '多貓突然打架'],
-    method: '隔離 + 降低刺激（遮蔽窗戶）+ 讓貓完全恢復 + 找出原始觸發物。不要在高度喚起時抓抱。',
-    tips: '這不是「牠突然變壞」，而是高度喚起 + 無法接近刺激 + 轉移攻擊。需要時間讓貓完全冷靜。',
+    id: "response-substitution",
+    name: "反應替代 (Response Substitution)",
+    category: "行為矯正",
+    description: "在觸發情境出現時，立即引導貓咪做出替代反應。",
+    steps: [
+      "確定觸發情境（如：門鈴響）",
+      "預先教導一個替代行為（如：聽到門鈴->去指定位置）",
+      "在觸發情境發生前，準備好引導工具",
+      "觸發出現瞬間，立即引導貓咪執行替代行為",
+      "成功執行後給予大獎獎勵"
+    ],
+    bestFor: ["escaping", "aggression", "vocalization", "fear"],
+    difficulty: "medium",
+    duration: "2-4週",
+    tools: ["目標棒", "零食", "響片"]
   },
   {
-    id: 28,
-    name: '撫摸誘發攻擊',
-    subtitle: 'Petting Aggression',
-    category: '情緒調節',
-    purpose: '摸得很好→突然咬。需要觀察早期停止訊號。',
-    applicable: ['摸一摸突然咬人', '撫摸時揮爪', '身體緊張後攻擊'],
-    method: '觀察早期訊號（尾巴甩動、耳朵改變、皮膚抽動、回頭看手）→ 在訊號出現時停止撫摸。',
-    tips: '不要直接解讀成「牠翻臉」。應觀察身體語言，在貓咪發出早期訊號時停止。',
+    id: "calm-holding",
+    name: "冷靜抱持法 (Calm Holding)",
+    category: "基礎護理",
+    description: "教導貓咪接受溫和約束，降低護理與醫療過程的壓力。",
+    steps: [
+      "從極短時間開始（1秒），輕輕固定貓咪後立即放開並獎勵",
+      "逐步延長固定時間",
+      "在固定期間輕聲說話並給予零食",
+      "配合毛巾包裹技巧（貓咪捲餅），限制活動但保持舒適",
+      "與日常正面互動穿插進行，避免只有護理時才固定"
+    ],
+    bestFor: ["aggression", "fear", "social"],
+    difficulty: "medium",
+    duration: "2-4週",
+    tools: ["毛巾", "零食", "安靜環境"]
   },
   {
-    id: 29,
-    name: '玩耍攻擊',
-    subtitle: 'Play Aggression',
-    category: '行為改造',
-    purpose: '追腳、伏擊腳踝、咬手。需要把追逐對象從人體換成適當玩具。',
-    applicable: ['追腳', '咬手', '撲腿', '伏擊腳踝'],
-    method: '停止人體遊戲 → 遠距離互動玩具 → 掠食遊戲 → 玩耍結束後食物／休息。',
-    tips: '目標不是消滅追逐，而是把追逐對象從人體換成適當玩具。不要用手繼續陪牠玩。',
+    id: "settle-on-cue",
+    name: "安靜指令訓練 (Settle on Cue)",
+    category: "行為管理",
+    description: "教導貓咪在指令下安靜躺下，用於過度興奮與焦慮情境。",
+    steps: [
+      "觀察並捕捉貓咪自然趴下的時刻，標記並獎勵",
+      "加入指令詞安靜或趴下",
+      "逐步延長維持趴下的時間",
+      "在不同情境中練習（遊戲後、訪客來訪前）",
+      "當貓咪過度興奮時，用安靜指令引導冷靜"
+    ],
+    bestFor: ["hyperactivity", "attention", "aggression", "separation"],
+    difficulty: "medium",
+    duration: "2-3週",
+    tools: ["響片", "零食", "墊子"]
   },
   {
-    id: 30,
-    name: '喵叫管理',
-    subtitle: 'Vocalization Management',
-    category: '行為改造',
-    purpose: '不能簡單使用「不理牠」。喵叫可能代表多種需求或疾病。',
-    applicable: ['過度喵叫', '夜間喵叫', '求食叫', '求關注叫'],
-    method: '先排除疾病疼痛老化認知 → 再評估求食/求關注/孤獨/無聊/作息/環境刺激 → 調整互動模式。',
-    tips: '尤其新出現或突然增加的喵叫，需要醫療排查。頻繁喵叫可能與甲狀腺、疼痛、感官退化有關。',
+    id: "premack-principle",
+    name: "普馬克原則 (Premack Principle)",
+    category: "進階訓練",
+    description: "用貓咪喜歡的行為作為獎勵，強化不喜歡但必要的行為。",
+    steps: [
+      "確定貓咪喜歡的行為（如：抓貓抓板、玩逗貓棒）",
+      "確定需要強化的行為（如：被摸肚子、進外出籠）",
+      "要求貓咪先完成目標行為，才能進行喜歡的行為",
+      "例如：進外出籠->才能出門散步；被摸肚子->才能玩最愛的玩具",
+      "讓貓咪理解先完成A，才能做B"
+    ],
+    bestFor: ["aggression", "fear", "escaping", "social"],
+    difficulty: "hard",
+    duration: "2-4週",
+    tools: ["貓咪喜歡的活動", "目標行為設置"]
   },
   {
-    id: 31,
-    name: '求關注行為',
-    subtitle: 'Attention-seeking',
-    category: '行為改造',
-    purpose: '調整互動模式：安靜時主動獎勵，而不是只在貓咪叫時回應。',
-    applicable: ['過度喵叫', '擋螢幕', '跳上鍵盤', '討摸'],
-    method: '確認不是真正需求後，調整為：安靜 → 主動獎勵。但不能直接「完全忽略所有喵叫」。',
-    tips: '必須先確認喵叫不是真正表達需求（疼痛、疾病、壓力）。調整時要確保貓咪的基本需求已被滿足。',
-  },
-  {
-    id: 32,
-    name: '外出籠訓練',
-    subtitle: 'Carrier Training',
-    category: '醫療照護',
-    purpose: '讓外出籠 = 安全、舒服、好事，而不是恐懼的來源。',
-    applicable: ['害怕外出籠', '看診困難', '出門壓力', '旅行焦慮'],
-    method: '籠子放著→獎勵。靠近→獎勵。進一隻腳→獎勵。進去→獎勵。關門一秒→獎勵。逐步增加。',
-    tips: '不要等要出門才硬塞。外出籠訓練應該在平安無事時進行，讓貓把籠子與好事連結。',
-  },
-  {
-    id: 33,
-    name: '看診減敏',
-    subtitle: 'Veterinary Desensitization',
-    category: '醫療照護',
-    purpose: '提前訓練身體檢查相關動作，讓真正看診時容易很多。',
-    applicable: ['害怕看獸醫', '身體檢查抗拒', '剪指甲', '梳毛', '點耳藥', '刷牙'],
-    method: '摸耳朵→獎勵。摸腳→獎勵。碰嘴巴→獎勵。進外出籠→獎勵。坐車→獎勵。每次都低於恐懼閾值。',
-    tips: '看診減敏需要長期進行，不是一次就能完成。每次訓練都要確保貓咪低於壓力閾值。',
-  },
-  {
-    id: 34,
-    name: '氣味管理',
-    subtitle: 'Scent Management',
-    category: '環境設計',
-    purpose: '貓的世界不是只有「看」。氣味是貓咪溝通與環境評估的核心。',
-    applicable: ['環境變化適應', '多貓緊張', '標記行為', '搬家', '新家具'],
-    method: '不要無必要地大量使用強烈香氛。保留貓咪熟悉的氣味標記點。使用貓咪費洛蒙輔助適應。',
-    tips: '臉部摩擦、身體摩擦、砂盆、抓板、休息區都是氣味資訊的一部分。不要完全洗掉這些標記。',
-  },
-  {
-    id: 35,
-    name: '觀察式溝通訓練',
-    subtitle: 'Observational Communication',
-    category: '基礎訓練',
-    purpose: '學習讀懂貓咪的肢體語言，是所有人貓互動的基礎。',
-    applicable: ['所有行為問題', '日常互動', '預防攻擊', '建立信任'],
-    method: '學習觀察尾巴、耳朵、眼神、身體姿勢、瞳孔變化。任何單一訊號都不能脫離情境單獨解讀。',
-    tips: '尾巴高舉通常友善；快速甩尾可能興奮或不耐；夾尾可能不安。學會觀察才能預防問題升級。',
-  },
-]
+    id: "choice-training",
+    name: "選擇權訓練 (Choice Training)",
+    category: "進階訓練",
+    description: "讓貓咪在訓練中保有選擇權，提升合作意願與自信心。",
+    steps: [
+      "提供兩個選項（如：A.被摸頭 B.自己玩玩具）",
+      "觀察貓咪的選擇，尊重其決定",
+      "若選擇互動，進行短暫正面互動後再給予下一個選擇",
+      "若選擇獨處，完全尊重並稍後再提供選擇",
+      "讓貓咪理解你有選擇，而且選擇互動會有好事發生"
+    ],
+    bestFor: ["fear", "social", "aggression", "attention"],
+    difficulty: "medium",
+    duration: "持續進行",
+    tools: ["選項設置", "零食", "玩具"]
+  }
+];
 
-export const categories = ['全部', '基礎訓練', '行為改造', '情緒調節', '環境設計', '進階應用', '多貓管理', '醫療照護'] as const
+export function getTechniquesForBehavior(behaviorId: string): Technique[] {
+  return techniques.filter((t) => t.bestFor.includes(behaviorId));
+}
+
+export function getTechniquesByCategory(category: string): Technique[] {
+  return techniques.filter((t) => t.category === category);
+}
+
+export function searchTechniques(query: string): Technique[] {
+  const q = query.toLowerCase();
+  return techniques.filter(
+    (t) =>
+      t.name.toLowerCase().includes(q) ||
+      t.description.toLowerCase().includes(q) ||
+      t.category.toLowerCase().includes(q) ||
+      t.steps.some((s) => s.toLowerCase().includes(q))
+  );
+}
+
+export const categories = [
+  "基礎溝通",
+  "基礎訓練",
+  "行為管理",
+  "行為矯正",
+  "情緒調節",
+  "環境管理",
+  "多貓管理",
+  "進階訓練",
+  "基礎排查",
+  "綜合方案",
+  "基礎護理",
+];

@@ -295,10 +295,28 @@ export const scoreLabels: Record<number, string> = {
 };
 
 export const scoreColors: Record<number, string> = {
-  0: "bg-slate-100 text-slate-400 border-slate-200",
-  1: "bg-green-50 text-green-700 border-green-200",
-  2: "bg-emerald-50 text-emerald-700 border-emerald-200",
-  3: "bg-yellow-50 text-yellow-700 border-yellow-200",
-  4: "bg-orange-50 text-orange-700 border-orange-200",
-  5: "bg-red-50 text-red-700 border-red-200",
+  0: "bg-slate-500 text-white border-slate-500 shadow-md",
+  1: "bg-emerald-500 text-white border-emerald-500 shadow-md",
+  2: "bg-green-500 text-white border-green-500 shadow-md",
+  3: "bg-amber-500 text-white border-amber-500 shadow-md",
+  4: "bg-orange-500 text-white border-orange-500 shadow-md",
+  5: "bg-red-500 text-white border-red-500 shadow-md",
+};
+
+export const scoreHoverColors: Record<number, string> = {
+  0: "hover:bg-slate-100 hover:text-slate-600 hover:border-slate-300",
+  1: "hover:bg-emerald-50 hover:text-emerald-600 hover:border-emerald-300",
+  2: "hover:bg-green-50 hover:text-green-600 hover:border-green-300",
+  3: "hover:bg-amber-50 hover:text-amber-600 hover:border-amber-300",
+  4: "hover:bg-orange-50 hover:text-orange-600 hover:border-orange-300",
+  5: "hover:bg-red-50 hover:text-red-600 hover:border-red-300",
+};
+
+export const scoreBarColors: Record<number, string> = {
+  0: "bg-slate-400",
+  1: "bg-emerald-400",
+  2: "bg-green-400",
+  3: "bg-amber-400",
+  4: "bg-orange-400",
+  5: "bg-red-400",
 };
