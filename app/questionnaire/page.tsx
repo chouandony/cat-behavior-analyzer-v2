@@ -11,8 +11,9 @@ import {
   Cat,
   Save,
   RotateCcw,
+  AlertTriangle,
 } from "lucide-react";
-import { sections, scoreLabels, scoreColors } from "@/data/questionnaire";
+import { sections, scoreLabels, scoreColors, scoreHoverColors, scoreBarColors } from "@/data/questionnaire";
 import { getUnansweredInSection } from "@/data/scoring";
 import CatSVG from "@/components/CatSVG";
 
@@ -30,6 +31,7 @@ export default function QuestionnairePage() {
   }>({ show: false, missing: [], message: "" });
   const [highlightId, setHighlightId] = useState<number | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [shakeSection, setShakeSection] = useState(false);
   const questionRefs = useRef<Record<number, HTMLDivElement | null>>({});
   const sectionRef = useRef<HTMLDivElement>(null);
 
@@ -55,11 +57,24 @@ export default function QuestionnairePage() {
     localStorage.setItem(STORAGE_PROGRESS, String(currentSection));
   }, [answers, currentSection]);
 
+  // 離開頁面警告
+  useEffect(() => {
+    const handleBeforeUnload = (e: BeforeUnloadEvent) => {
+      const allUnanswered = sections
+        .flatMap((s) => s.questions.map((q) => q.id))
+        .filter((id) => answers[id] === undefined);
+      if (allUnanswered.length > 0) {
+        e.preventDefault();
+        e.returnValue = "";
+      }
+    };
+    window.addEventListener("beforeunload", handleBeforeUnload);
+    return () => window.removeEventListener("beforeunload", handleBeforeUnload);
+  }, [answers]);
+
   const current = sections[currentSection];
   const totalSections = sections.length;
-  const progress = Math.round(
-    (Object.keys(answers).length / 100) * 100
-  );
+  const progress = Math.round((Object.keys(answers).length / 100) * 100);
 
   const handleSelect = useCallback((qid: number, value: number) => {
     setAnswers((prev) => ({ ...prev, [qid]: value }));
@@ -88,6 +103,8 @@ export default function QuestionnairePage() {
         missing,
         message: `尚有 ${missing.length} 題未作答（題號：${missing.join(", ")}）`,
       });
+      setShakeSection(true);
+      setTimeout(() => setShakeSection(false), 500);
       // 自動滾動到第一個未作答題目
       const firstMissing = missing[0];
       setHighlightId(firstMissing);
@@ -129,7 +146,6 @@ export default function QuestionnairePage() {
       allMissing.push(...getUnansweredInSection(answers, i));
     }
     if (allMissing.length > 0) {
-      // 跳到第一個未完成的區塊
       for (let i = 0; i < totalSections; i++) {
         if (getUnansweredInSection(answers, i).length > 0) {
           setCurrentSection(i);
@@ -139,6 +155,8 @@ export default function QuestionnairePage() {
               missing: allMissing,
               message: `全問卷尚有 ${allMissing.length} 題未作答，已自動跳轉至未完成區塊`,
             });
+            setShakeSection(true);
+            setTimeout(() => setShakeSection(false), 500);
             const first = getUnansweredInSection(answers, i)[0];
             if (first) {
               setHighlightId(first);
@@ -153,7 +171,6 @@ export default function QuestionnairePage() {
     }
 
     setIsSubmitting(true);
-    // 將答案存入 sessionStorage 供結果頁使用
     sessionStorage.setItem("cat-questionnaire-result", JSON.stringify(answers));
     router.push("/questionnaire/result/");
   }, [validateSection, answers, totalSections, router]);
@@ -171,25 +188,31 @@ export default function QuestionnairePage() {
   const isQuestionMissing = (qid: number) =>
     warning.show && warning.missing.includes(qid);
 
+  const getSelectedColor = (qid: number) => {
+    const val = answers[qid];
+    if (val === undefined) return null;
+    return scoreBarColors[val as keyof typeof scoreBarColors] || "bg-slate-300";
+  };
+
   return (
     <div className="space-y-4 pb-32">
-      {/* 頂部標題區 */}
-      <div className="relative bg-gradient-to-br from-forest-50 via-cream to-cat-50 rounded-3xl border-2 border-earth-200 p-6 overflow-hidden">
+      {/* 頂部標題區 - 更艷麗 */}
+      <div className="relative bg-gradient-to-br from-orange-50 via-white to-emerald-50 rounded-3xl border-2 border-orange-100 p-6 overflow-hidden">
         <div className="flex items-center gap-4">
           <div className="shrink-0 animate-float">
             <CatSVG size={80} pose="waving" />
           </div>
           <div className="flex-1 min-w-0">
             <div className="flex items-center gap-2 mb-1">
-              <ClipboardCheck size={16} className="text-cat-500" />
-              <span className="text-xs font-bold text-cat-600 tracking-wide">
+              <ClipboardCheck size={16} className="text-orange-500" />
+              <span className="text-xs font-bold text-orange-600 tracking-wide">
                 Fe-BARQ 專業評估
               </span>
             </div>
-            <h1 className="text-xl font-black text-earth-600 leading-tight">
+            <h1 className="text-xl font-black text-slate-800 leading-tight">
               貓咪行為評估問卷
             </h1>
-            <p className="text-sm text-earth-400 mt-1 leading-relaxed">
+            <p className="text-sm text-slate-500 mt-1 leading-relaxed">
               100題專業評估，涵蓋24個行為維度，幫助您全面了解貓咪的行為特徵。
             </p>
           </div>
@@ -197,27 +220,27 @@ export default function QuestionnairePage() {
 
         {/* 進度條 */}
         <div className="mt-4">
-          <div className="flex justify-between text-xs text-earth-400 mb-1.5">
-            <span>完成進度</span>
-            <span className="font-bold text-earth-500">{progress}%</span>
+          <div className="flex justify-between text-xs text-slate-500 mb-1.5">
+            <span className="font-medium">完成進度</span>
+            <span className="font-bold text-slate-700">{progress}%</span>
           </div>
-          <div className="h-2.5 bg-earth-100 rounded-full overflow-hidden">
+          <div className="h-3 bg-slate-100 rounded-full overflow-hidden">
             <div
-              className="h-full bg-gradient-to-r from-forest-400 to-cat-400 rounded-full transition-all duration-500"
+              className="h-full bg-gradient-to-r from-emerald-400 via-orange-400 to-red-400 rounded-full transition-all duration-500"
               style={{ width: `${progress}%` }}
             />
           </div>
-          <div className="flex justify-between text-[10px] text-earth-400 mt-1">
+          <div className="flex justify-between text-[10px] text-slate-400 mt-1">
             <span>{Object.keys(answers).length} / 100 題</span>
             <span>第 {currentSection + 1} / {totalSections} 部分</span>
           </div>
         </div>
       </div>
 
-      {/* 紅色警告區塊 */}
+      {/* 紅色警告區塊 - 更醒目 */}
       {warning.show && (
-        <div className="animate-fade-in-up bg-red-50 border-2 border-red-200 rounded-xl p-4 flex items-start gap-3">
-          <AlertCircle size={20} className="text-red-500 shrink-0 mt-0.5" />
+        <div className="animate-fade-in-up bg-red-50 border-l-4 border-red-500 rounded-xl p-4 flex items-start gap-3 shadow-sm">
+          <AlertTriangle size={20} className="text-red-500 shrink-0 mt-0.5" />
           <div className="flex-1">
             <p className="text-sm font-bold text-red-700">{warning.message}</p>
             <p className="text-xs text-red-500 mt-1">
@@ -243,10 +266,10 @@ export default function QuestionnairePage() {
               }}
               className={`shrink-0 px-3 py-1.5 rounded-lg text-xs font-bold transition-all border ${
                 isActive
-                  ? "bg-cat-500 text-white border-cat-500 shadow-md"
+                  ? "bg-orange-500 text-white border-orange-500 shadow-md"
                   : isCompleted
-                  ? "bg-forest-50 text-forest-600 border-forest-200"
-                  : "bg-white text-earth-400 border-earth-200"
+                  ? "bg-emerald-50 text-emerald-600 border-emerald-200"
+                  : "bg-white text-slate-400 border-slate-200"
               }`}
             >
               <span className="mr-1">{idx + 1}</span>
@@ -260,16 +283,16 @@ export default function QuestionnairePage() {
       </div>
 
       {/* 當前區塊 */}
-      <div ref={sectionRef} className="space-y-4">
+      <div ref={sectionRef} className={`space-y-4 ${shakeSection ? 'animate-shake' : ''}`}>
         <div className="flex items-center gap-3">
-          <div className="w-10 h-10 rounded-xl bg-cat-100 flex items-center justify-center shrink-0">
-            <Cat size={20} className="text-cat-600" />
+          <div className="w-10 h-10 rounded-xl bg-orange-100 flex items-center justify-center shrink-0">
+            <Cat size={20} className="text-orange-600" />
           </div>
           <div>
-            <h2 className="text-lg font-bold text-earth-600">{current.title}</h2>
-            <p className="text-xs text-earth-400">{current.description}</p>
+            <h2 className="text-lg font-bold text-slate-800">{current.title}</h2>
+            <p className="text-xs text-slate-500">{current.description}</p>
           </div>
-          <div className="ml-auto text-xs text-earth-400 bg-white px-3 py-1 rounded-full border border-earth-200">
+          <div className="ml-auto text-xs text-slate-500 bg-white px-3 py-1 rounded-full border border-slate-200">
             {current.questions.length} 題
           </div>
         </div>
@@ -280,6 +303,7 @@ export default function QuestionnairePage() {
             const missing = isQuestionMissing(q.id);
             const selected = answers[q.id];
             const isHighlighted = highlightId === q.id;
+            const barColor = getSelectedColor(q.id);
 
             return (
               <div
@@ -287,63 +311,79 @@ export default function QuestionnairePage() {
                 ref={(el) => {
                   questionRefs.current[q.id] = el;
                 }}
-                className={`bg-white rounded-xl border-2 p-4 transition-all duration-300 ${
+                className={`relative bg-white rounded-xl border-2 p-4 transition-all duration-300 overflow-hidden ${
                   missing
                     ? "border-red-400 shadow-red-100 shadow-md"
                     : isHighlighted
-                    ? "border-cat-400 shadow-cat-100 shadow-lg scale-[1.02]"
-                    : "border-earth-200 hover:border-earth-300"
+                    ? "border-orange-400 shadow-orange-100 shadow-lg scale-[1.02]"
+                    : barColor
+                    ? "border-slate-200"
+                    : "border-slate-200 hover:border-orange-200"
                 }`}
               >
-                <div className="flex items-start gap-3 mb-3">
+                {/* 左側 Color Bar */}
+                <div className={`color-bar ${barColor || (missing ? "bg-red-400" : "bg-transparent")}`} />
+
+                <div className="flex items-start gap-3 mb-3 pl-2">
                   <div
-                    className={`shrink-0 w-8 h-8 rounded-full flex items-center justify-center text-xs font-bold transition-colors ${
+                    className={`shrink-0 w-8 h-8 rounded-full flex items-center justify-center text-xs font-bold transition-all ${
                       missing
-                        ? "bg-red-100 text-red-600"
+                        ? "bg-red-100 text-red-600 animate-pulse"
                         : selected !== undefined
-                        ? "bg-forest-100 text-forest-600"
-                        : "bg-earth-100 text-earth-500"
+                        ? `${scoreBarColors[selected as keyof typeof scoreBarColors]} text-white`
+                        : "bg-slate-100 text-slate-500"
                     }`}
                   >
                     {q.id}
                   </div>
                   <p
-                    className={`text-sm font-medium leading-relaxed pt-1 ${
-                      missing ? "text-red-700" : "text-earth-600"
+                    className={`text-sm font-semibold leading-relaxed pt-1 ${
+                      missing ? "text-red-700" : "text-slate-700"
                     }`}
                   >
                     {q.text}
                     {q.reverse && (
-                      <span className="ml-1 text-[10px] text-earth-400 bg-earth-50 px-1.5 py-0.5 rounded">
+                      <span className="ml-1.5 text-[10px] text-slate-400 bg-slate-50 px-1.5 py-0.5 rounded border border-slate-200">
                         反向計分
                       </span>
                     )}
                   </p>
                 </div>
 
-                {/* 選項 */}
-                <div className="grid grid-cols-6 gap-1.5">
-                  {[0, 1, 2, 3, 4, 5].map((val) => (
-                    <button
-                      key={val}
-                      onClick={() => handleSelect(q.id, val)}
-                      className={`py-2 px-1 rounded-lg text-xs font-bold border-2 transition-all active:scale-95 ${
-                        selected === val
-                          ? scoreColors[val as keyof typeof scoreColors].replace(
-                              "bg-",
-                              "ring-2 ring-offset-1 ring-"
-                            ) + " " + scoreColors[val as keyof typeof scoreColors]
-                          : "bg-white text-earth-400 border-earth-200 hover:border-earth-300"
-                      }`}
-                    >
-                      <span className="block text-lg leading-none mb-0.5">
-                        {val}
-                      </span>
-                      <span className="block text-[9px] scale-90">
-                        {scoreLabels[val as keyof typeof scoreLabels]}
-                      </span>
-                    </button>
-                  ))}
+                {/* 極端值提示 */}
+                {selected === 5 && (
+                  <div className="mb-2 pl-10">
+                    <span className="inline-flex items-center gap-1 text-[10px] font-bold text-red-600 bg-red-50 px-2 py-0.5 rounded-full border border-red-200">
+                      <AlertTriangle size={10} />
+                      這個行為頻率很高，建議優先關注
+                    </span>
+                  </div>
+                )}
+
+                {/* 選項 - Solid Color 方案 */}
+                <div className="grid grid-cols-6 gap-1.5 pl-2">
+                  {[0, 1, 2, 3, 4, 5].map((val) => {
+                    const isSelected = selected === val;
+                    const baseClasses = "score-option py-2.5 px-1 rounded-lg text-xs font-bold border-2 transition-all";
+                    const selectedClasses = isSelected
+                      ? scoreColors[val as keyof typeof scoreColors]
+                      : `bg-white text-slate-500 border-slate-200 ${scoreHoverColors[val as keyof typeof scoreHoverColors]}`;
+
+                    return (
+                      <button
+                        key={val}
+                        onClick={() => handleSelect(q.id, val)}
+                        className={`${baseClasses} ${selectedClasses}`}
+                      >
+                        <span className="block text-lg leading-none mb-0.5">
+                          {val}
+                        </span>
+                        <span className="block text-[9px] scale-90 opacity-90">
+                          {scoreLabels[val as keyof typeof scoreLabels]}
+                        </span>
+                      </button>
+                    );
+                  })}
                 </div>
               </div>
             );
@@ -352,12 +392,12 @@ export default function QuestionnairePage() {
       </div>
 
       {/* 底部導航按鈕 */}
-      <div className="fixed bottom-0 left-0 right-0 bg-white/90 backdrop-blur-md border-t border-earth-200 p-4 z-40">
+      <div className="fixed bottom-0 left-0 right-0 glass border-t border-slate-200 p-4 z-40">
         <div className="max-w-2xl mx-auto flex items-center gap-3">
           <button
             onClick={handlePrev}
             disabled={currentSection === 0}
-            className="shrink-0 flex items-center gap-1 px-4 py-3 rounded-xl border-2 border-earth-200 text-earth-500 font-bold text-sm disabled:opacity-40 disabled:cursor-not-allowed hover:border-earth-300 transition-all"
+            className="shrink-0 flex items-center gap-1 px-4 py-3 rounded-xl border-2 border-slate-200 text-slate-600 font-bold text-sm disabled:opacity-40 disabled:cursor-not-allowed hover:border-slate-300 hover:bg-slate-50 transition-all active:scale-95"
           >
             <ChevronLeft size={18} />
             上一部分
@@ -366,7 +406,7 @@ export default function QuestionnairePage() {
           <div className="flex-1 text-center">
             <button
               onClick={handleReset}
-              className="text-xs text-earth-400 hover:text-red-500 transition-colors flex items-center gap-1 mx-auto"
+              className="text-xs text-slate-400 hover:text-red-500 transition-colors flex items-center gap-1 mx-auto"
             >
               <RotateCcw size={12} />
               清除重填
@@ -376,7 +416,7 @@ export default function QuestionnairePage() {
           {currentSection < totalSections - 1 ? (
             <button
               onClick={handleNext}
-              className="shrink-0 flex items-center gap-1 px-5 py-3 rounded-xl bg-cat-500 hover:bg-cat-600 text-white font-bold text-sm shadow-lg transition-all active:scale-[0.98]"
+              className="shrink-0 flex items-center gap-1 px-5 py-3 rounded-xl bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 text-white font-bold text-sm shadow-lg shadow-orange-200 transition-all active:scale-95"
             >
               下一部分
               <ChevronRight size={18} />
@@ -385,7 +425,7 @@ export default function QuestionnairePage() {
             <button
               onClick={handleSubmit}
               disabled={isSubmitting}
-              className="shrink-0 flex items-center gap-1.5 px-5 py-3 rounded-xl bg-forest-500 hover:bg-forest-600 text-white font-bold text-sm shadow-lg transition-all active:scale-[0.98] disabled:opacity-60"
+              className="shrink-0 flex items-center gap-1.5 px-5 py-3 rounded-xl bg-gradient-to-r from-emerald-500 to-emerald-600 hover:from-emerald-600 hover:to-emerald-700 text-white font-bold text-sm shadow-lg shadow-emerald-200 transition-all active:scale-95 disabled:opacity-60"
             >
               {isSubmitting ? (
                 <>
