@@ -13,7 +13,6 @@ export interface BehaviorStrategy {
 }
 
 export const behaviorStrategies: BehaviorStrategy[] = [
-  // === 排泄問題 (toileting) ===
   {
     behaviorId: 'toileting',
     defaultStrategies: [
@@ -52,8 +51,6 @@ export const behaviorStrategies: BehaviorStrategy[] = [
       ],
     },
   },
-
-  // === 破壞行為 (destructive) ===
   {
     behaviorId: 'destructive',
     defaultStrategies: [
@@ -92,8 +89,6 @@ export const behaviorStrategies: BehaviorStrategy[] = [
       ],
     },
   },
-
-  // === 攻擊行為 (aggression) ===
   {
     behaviorId: 'aggression',
     defaultStrategies: [
@@ -132,9 +127,7 @@ export const behaviorStrategies: BehaviorStrategy[] = [
       ],
     },
   },
-
-  // === 過度發聲 (vocalization) ===
-  {
+    {
     behaviorId: 'vocalization',
     defaultStrategies: [
       {
@@ -172,8 +165,6 @@ export const behaviorStrategies: BehaviorStrategy[] = [
       ],
     },
   },
-
-  // === 多貓衝突 (intercat) ===
   {
     behaviorId: 'intercat',
     defaultStrategies: [
@@ -212,8 +203,6 @@ export const behaviorStrategies: BehaviorStrategy[] = [
       ],
     },
   },
-
-  // === 恐懼與逃避 (fear) ===
   {
     behaviorId: 'fear',
     defaultStrategies: [
@@ -252,8 +241,6 @@ export const behaviorStrategies: BehaviorStrategy[] = [
       ],
     },
   },
-
-  // === 分離焦慮 (separation) ===
   {
     behaviorId: 'separation',
     defaultStrategies: [
@@ -292,8 +279,6 @@ export const behaviorStrategies: BehaviorStrategy[] = [
       ],
     },
   },
-
-  // === 強迫行為 (compulsive) ===
   {
     behaviorId: 'compulsive',
     defaultStrategies: [
@@ -332,8 +317,6 @@ export const behaviorStrategies: BehaviorStrategy[] = [
       ],
     },
   },
-
-  // === 精力過盛/玩耍攻擊 (hyperactivity) ===
   {
     behaviorId: 'hyperactivity',
     defaultStrategies: [
@@ -372,8 +355,6 @@ export const behaviorStrategies: BehaviorStrategy[] = [
       ],
     },
   },
-
-  // === 衝門/逃跑 (escaping) ===
   {
     behaviorId: 'escaping',
     defaultStrategies: [
@@ -412,8 +393,6 @@ export const behaviorStrategies: BehaviorStrategy[] = [
       ],
     },
   },
-
-  // === 社交不適 (social) ===
   {
     behaviorId: 'social',
     defaultStrategies: [
@@ -452,8 +431,6 @@ export const behaviorStrategies: BehaviorStrategy[] = [
       ],
     },
   },
-
-  // === 過度尋求關注 (attention) ===
   {
     behaviorId: 'attention',
     defaultStrategies: [
@@ -497,10 +474,8 @@ export const behaviorStrategies: BehaviorStrategy[] = [
 export function getStrategies(behaviorId: string, functionId?: string): StrategyStep[] {
   const behavior = behaviorStrategies.find(b => b.behaviorId === behaviorId)
   if (!behavior) return []
-
   if (functionId && behavior.byFunction[functionId]) {
     return behavior.byFunction[functionId]
   }
-
   return behavior.defaultStrategies
 }
