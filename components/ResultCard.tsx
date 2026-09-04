@@ -1,6 +1,7 @@
 'use client'
 
 import { useState } from 'react'
+import Link from 'next/link'
 import { ChevronDown, AlertCircle, CheckCircle2, HelpCircle } from 'lucide-react'
 import { cn } from '@/lib/utils'
 import type { StrategyStep } from '@/data/strategies'
@@ -74,13 +75,14 @@ export default function ResultCard({ step, index }: Props) {
               <p className="text-xs font-medium text-earth-400 uppercase tracking-wider">推薦技術</p>
               <div className="flex flex-wrap gap-2">
                 {stepTechniques.map((tech) => (
-                  <span
+                  <Link
                     key={tech.id}
-                    className="inline-flex items-center gap-1.5 text-sm px-3 py-1.5 rounded-lg bg-cream border border-earth-200 text-earth-500"
+                    href={`/techniques/#tech-${tech.id}`}
+                    className="inline-flex items-center gap-1.5 text-sm px-3 py-1.5 rounded-lg bg-cream border border-earth-200 text-earth-500 hover:border-cat-400 hover:text-cat-600 transition-colors"
                   >
                     <span className="text-xs">{tech.id}.</span>
                     {tech.name}
-                  </span>
+                  </Link>
                 ))}
               </div>
             </div>
