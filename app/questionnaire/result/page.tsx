@@ -194,19 +194,8 @@ export default function QuestionnaireResultPage() {
         </div>
       )}
 
-      {/* 底部操作 */}
+      {/* 底部操作（已移除「對全部關注行為進行 ABC+E 分析」大按鈕） */}
       <div className="pt-4 space-y-3">
-        {flaggedBehaviors.length > 0 && (
-          <Link
-            href={`/abc/?behaviors=${flaggedBehaviors.map((b) => b.behavior.id).join(",")}`}
-            className="flex items-center justify-center gap-2 w-full bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 text-white font-bold py-3.5 px-6 rounded-xl shadow-lg shadow-orange-200 transition-all active:scale-[0.98]"
-          >
-            <Sparkles size={20} />
-            <span>對全部關注行為進行 ABC+E 分析</span>
-            <ArrowRight size={20} />
-          </Link>
-        )}
-
         <div className="grid grid-cols-2 gap-3">
           <Link
             href="/questionnaire/"
