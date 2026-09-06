@@ -670,14 +670,14 @@ export default function HomePage() {
           <div className="bg-white w-full max-w-2xl h-[100dvh] sm:h-[80vh] sm:rounded-3xl rounded-t-3xl shadow-2xl flex flex-col overflow-hidden">
             {/* 頂部標題列 */}
             <div className="flex items-center justify-between px-5 py-4 border-b border-slate-100 bg-gradient-to-r from-cat-50 to-emerald-50 shrink-0">
-              <div className="flex items-center gap-2">
-                <BookOpenText size={20} className="text-cat-500" />
-                <span className="font-bold text-slate-700">📖 飼主使用手冊</span>
-                <span className="text-xs text-slate-400">{guidePage + 1} / {guidePages.length}</span>
+              <div className="flex items-center gap-2 min-w-0 flex-1">
+                <BookOpenText size={20} className="text-cat-500 shrink-0" />
+                <span className="font-bold text-slate-700 truncate">📖 飼主使用手冊</span>
+                <span className="text-xs text-slate-400 shrink-0">{guidePage + 1} / {guidePages.length}</span>
               </div>
               <button
                 onClick={() => setShowGuide(false)}
-                className="w-8 h-8 rounded-full bg-white/80 hover:bg-white flex items-center justify-center text-slate-400 hover:text-slate-600 transition-colors border border-slate-200"
+                className="w-8 h-8 rounded-full bg-white/80 hover:bg-white flex items-center justify-center text-slate-400 hover:text-slate-600 transition-colors border border-slate-200 shrink-0 ml-2"
               >
                 <X size={18} />
               </button>
