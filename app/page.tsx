@@ -667,7 +667,7 @@ export default function HomePage() {
           className="fixed inset-0 z-[100] bg-black/40 backdrop-blur-sm flex items-end sm:items-center justify-center"
           onClick={(e) => { if (e.target === e.currentTarget) setShowGuide(false); }}
         >
-          <div className="bg-white w-full max-w-2xl h-[100dvh] sm:h-[80vh] sm:rounded-3xl rounded-t-3xl shadow-2xl flex flex-col overflow-hidden">
+          <div className="bg-white w-full max-w-2xl h-[100dvh] sm:h-[80vh] sm:rounded-3xl rounded-t-3xl shadow-2xl flex flex-col overflow-hidden pt-14 sm:pt-0">
             {/* 頂部標題列 */}
             <div className="flex items-center justify-between px-5 py-4 border-b border-slate-100 bg-gradient-to-r from-cat-50 to-emerald-50 shrink-0">
               <div className="flex items-center gap-2 min-w-0 flex-1">
