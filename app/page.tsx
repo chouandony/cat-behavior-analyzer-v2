@@ -50,7 +50,7 @@ const guidePages = [
     <div className="grid grid-cols-1 gap-3">
       <div className="bg-emerald-50 rounded-xl border border-emerald-200 p-3">
         <p className="text-sm font-bold text-emerald-700">🔹 系統化評估</p>
-        <p className="text-xs text-slate-600 mt-1">使用 Fe-BARQ 專業問卷，100 題完整檢視貓咪的 24 個行為維度。</p>
+        <p className="text-xs text-slate-600 mt-1">透過專業行為評估問卷，100 題完整檢視貓咪的 24 個行為維度。</p>
       </div>
       <div className="bg-blue-50 rounded-xl border border-blue-200 p-3">
         <p className="text-sm font-bold text-blue-700">🔹 科學化分析</p>
@@ -72,7 +72,7 @@ const guidePages = [
     <h3 className="text-lg font-black text-slate-800 pt-2">🚀 三分鐘快速上手</h3>
     <div className="space-y-2 text-sm text-slate-600">
       <p><span className="font-bold text-cat-600">🔵 第一步｜打開網頁</span><br/>不用下載 App，不用註冊帳號，打開網頁就可以使用。</p>
-      <p><span className="font-bold text-cat-600">🔵 第二步｜選擇功能</span><br/>還不確定問題？→ 點「Fe-BARQ 行為評估問卷」<br/>已經知道問題？→ 首頁選行為卡片 → 按「開始 ABC 分析」<br/>想學方法？→ 點「35 個訓練技術」</p>
+      <p><span className="font-bold text-cat-600">🔵 第二步｜選擇功能</span><br/>還不確定問題？→ 點「行為評估問卷」<br/>已經知道問題？→ 首頁選行為卡片 → 按「開始 ABC 分析」<br/>想學方法？→ 點「35 個訓練技術」</p>
       <p><span className="font-bold text-cat-600">🔵 第三步｜跟著引導走</span><br/>每個頁面都有清楚步驟，遇到不懂的名詞都有說明。</p>
     </div>
   </div>,
@@ -84,7 +84,7 @@ const guidePages = [
         <span className="font-bold text-slate-700">貓咪行為分析</span>
       </div>
       <div className="bg-cat-50 rounded-lg p-3 border border-cat-200">
-        <p className="text-sm font-bold text-cat-700">📋 Fe-BARQ 行為評估問卷</p>
+        <p className="text-sm font-bold text-cat-700">📋 行為評估問卷</p>
         <p className="text-xs text-slate-600 mt-1">100 題專業評估，涵蓋 24 個行為維度。<br/>適合：「我不知道貓咪到底有什麼問題。」</p>
       </div>
       <div className="bg-slate-50 rounded-lg p-3">
@@ -101,9 +101,9 @@ const guidePages = [
     </div>
   </div>,
   <div key="4" className="space-y-4">
-    <h3 className="text-lg font-black text-slate-800">📊 Fe-BARQ 行為評估｜先全面了解你的貓</h3>
-    <p className="text-sm text-slate-600 leading-relaxed">Fe-BARQ = <span className="font-bold">F</span>eline <span className="font-bold">B</span>ehavioral <span className="font-bold">A</span>ssessment & <span className="font-bold">R</span>esearch <span className="font-bold">Q</span>uestionnaire</p>
-    <p className="text-xs text-slate-500">這是一套標準化的貓咪行為評估工具，我們將它轉化成一般飼主可以在家完成的互動式問卷。</p>
+    <h3 className="text-lg font-black text-slate-800">📊 行為評估｜先全面了解你的貓</h3>
+    <p className="text-sm text-slate-600 leading-relaxed">本問卷基於學術研究框架設計，涵蓋 24 個行為維度，幫助您全面了解貓咪的行為特徵。</p>
+    <p className="text-xs text-slate-500">這是一套參考學術研究框架編寫的行為評估問卷，改編為一般飼主也能在家完成的互動式問卷。</p>
     <div className="bg-gradient-to-br from-cat-50 to-emerald-50 rounded-xl border-2 border-cat-200 p-4">
       <p className="text-sm font-bold text-slate-700 mb-3">📋 24 個行為維度</p>
       <div className="grid grid-cols-2 gap-x-2 gap-y-1 text-xs text-slate-600">
@@ -353,7 +353,7 @@ const guidePages = [
     </div>
     <h3 className="text-sm font-bold text-slate-700 pt-2">三種使用方式</h3>
     <div className="space-y-2 text-xs text-slate-600">
-      <p><b>情境一｜第一次用，想全面了解貓咪</b><br/>首頁 → Fe-BARQ 問卷 → 100 題 → 結果報告 → ABC 分析 → 訓練對策 → 35 個訓練技術 → 開始執行 → 每天追蹤</p>
+      <p><b>情境一｜第一次用，想全面了解貓咪</b><br/>首頁 → 行為評估問卷 → 100 題 → 結果報告 → ABC 分析 → 訓練對策 → 35 個訓練技術 → 開始執行 → 每天追蹤</p>
       <p><b>情境二｜已經知道貓咪有亂尿問題</b><br/>首頁 → 亂尿／噴尿 → ABC 分析 → 訓練對策 → 訓練技術 → 開始執行 → 進度追蹤</p>
       <p><b>情境三｜想先學方法</b><br/>首頁 → 35 個訓練技術 → 找到想學的方法 → 閱讀詳細說明 → 回首頁 → 選擇行為 → ABC 分析</p>
     </div>
@@ -521,7 +521,7 @@ export default function HomePage() {
             <ClipboardCheck size={24} className="text-white" />
           </div>
           <div className="flex-1">
-            <h2 className="font-black text-lg">Fe-BARQ 行為評估問卷</h2>
+            <h2 className="font-black text-lg">行為評估問卷</h2>
             <p className="text-sm text-white/80 mt-0.5">
               100題專業評估，24個維度，自動識別需要關注的行為問題
             </p>
