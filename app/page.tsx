@@ -691,7 +691,7 @@ export default function HomePage() {
             </div>
 
             {/* 底部翻頁控制 */}
-            <div className="flex items-center justify-between px-5 pt-4 pb-16 sm:pb-4 border-t border-slate-100 bg-white shrink-0">
+            <div className="flex items-center justify-between px-5 pt-4 pb-20 sm:pb-8 border-t border-slate-100 bg-white shrink-0">
               <button
                 onClick={() => setGuidePage((p) => Math.max(0, p - 1))}
                 disabled={guidePage === 0}
