@@ -39,7 +39,7 @@ export default function RootLayout({
         </main>
 
         {/* 底部免責聲明 */}
-        <div className="fixed bottom-0 left-0 right-0 bg-slate-800 text-white text-[10px] py-2 px-4 text-center z-50">
+        <div className="fixed bottom-0 left-0 right-0 bg-slate-800 text-white text-[10px] py-2 px-4 text-center z-30">
           <p>
             本工具僅供輔助參考，不構成專業獸醫或動物行為諮詢建議。評估結果與訓練對策基於學術研究框架獨立編寫，非官方授權的標準化問卷。若您依據本工具建議操作，導致寵物受傷、行為問題惡化或人員受傷，開發者不負相關法律責任。如有嚴重行為問題，請尋求認證行為諮詢師協助。
           </p>
