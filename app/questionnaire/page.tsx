@@ -220,7 +220,7 @@ export default function QuestionnairePage() {
   };
 
   return (
-    <div className="space-y-4 pb-32">
+    <div className="space-y-4 pb-44">
       {/* 頂部標題區 */}
       <div className="relative bg-gradient-to-br from-orange-50 via-white to-emerald-50 rounded-3xl border-2 border-orange-100 p-6 overflow-hidden">
         <div className="flex items-center gap-4">
