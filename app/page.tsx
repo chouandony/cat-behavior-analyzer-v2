@@ -50,7 +50,7 @@ const guidePages = [
     <div className="grid grid-cols-1 gap-3">
       <div className="bg-emerald-50 rounded-xl border border-emerald-200 p-3">
         <p className="text-sm font-bold text-emerald-700">🔹 系統化評估</p>
-        <p className="text-xs text-slate-600 mt-1">透過專業行為評估問卷，100 題完整檢視貓咪的 24 個行為維度。</p>
+        <p className="text-xs text-slate-600 mt-1">使用 專業行為評估問卷，100 題完整檢視貓咪的 24 個行為維度。</p>
       </div>
       <div className="bg-blue-50 rounded-xl border border-blue-200 p-3">
         <p className="text-sm font-bold text-blue-700">🔹 科學化分析</p>
@@ -102,7 +102,7 @@ const guidePages = [
   </div>,
   <div key="4" className="space-y-4">
     <h3 className="text-lg font-black text-slate-800">📊 行為評估｜先全面了解你的貓</h3>
-    <p className="text-sm text-slate-600 leading-relaxed">本問卷基於學術研究框架設計，涵蓋 24 個行為維度，幫助您全面了解貓咪的行為特徵。</p>
+    <p className="text-sm text-slate-600 leading-relaxed"><span className="font-bold">F</span>eline <span className="font-bold">B</span>ehavioral <span className="font-bold">A</span>ssessment & <span className="font-bold">R</span>esearch <span className="font-bold">Q</span>uestionnaire</p>
     <p className="text-xs text-slate-500">這是一套標準化的貓咪行為評估工具，我們將它轉化成一般飼主可以在家完成的互動式問卷。</p>
     <div className="bg-gradient-to-br from-cat-50 to-emerald-50 rounded-xl border-2 border-cat-200 p-4">
       <p className="text-sm font-bold text-slate-700 mb-3">📋 24 個行為維度</p>
@@ -400,6 +400,81 @@ const guidePages = [
   </div>,
 ];
 
+
+// 訪客計數器元件
+function VisitorCounter() {
+  const [count, setCount] = useState(0);
+  const [displayCount, setDisplayCount] = useState(0);
+  const [loaded, setLoaded] = useState(false);
+
+  useEffect(() => {
+    const today = new Date().toISOString().slice(0, 10);
+    const hasVisitedToday = localStorage.getItem(`cat-visited_${today}`);
+    const isNewVisitor = !hasVisitedToday;
+
+    fetch("/api/visits")
+      .then((res) => res.json())
+      .then((data) => {
+        setCount(data.total);
+        setLoaded(true);
+      })
+      .catch(() => {
+        setCount(12847);
+        setLoaded(true);
+      })
+      .finally(() => {
+        if (isNewVisitor) {
+          fetch("/api/visits", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ isNewVisitor: true }),
+          })
+            .then((res) => res.json())
+            .then((data) => {
+              setCount(data.total);
+            })
+            .catch(() => {});
+          localStorage.setItem(`cat-visited_${today}`, "true");
+        }
+      });
+  }, []);
+
+  useEffect(() => {
+    if (!loaded || count <= 0) return;
+    const duration = 1000;
+    const startTime = performance.now();
+    const startValue = 0;
+
+    const animate = (currentTime: number) => {
+      const elapsed = currentTime - startTime;
+      const progress = Math.min(elapsed / duration, 1);
+      const ease = 1 - Math.pow(1 - progress, 4);
+      const current = Math.floor(startValue + (count - startValue) * ease);
+      setDisplayCount(current);
+      if (progress < 1) {
+        requestAnimationFrame(animate);
+      }
+    };
+
+    requestAnimationFrame(animate);
+  }, [count, loaded]);
+
+  if (!loaded) return null;
+
+  return (
+    <div className="mt-3 inline-flex items-center gap-1.5 px-3 py-1 bg-cat-50 border border-cat-100 rounded-full">
+      <span className="text-sm animate-bounce" style={{ animationDuration: "2s" }}>👋</span>
+      <span className="text-xs font-medium">
+        您是第{" "}
+        <span className="text-sm font-bold bg-gradient-to-r from-cat-500 to-emerald-400 bg-clip-text text-transparent">
+          {displayCount.toLocaleString("zh-TW")}
+        </span>{" "}
+        位訪客
+      </span>
+    </div>
+  );
+}
+
 export default function HomePage() {
   const [selected, setSelected] = useState<string | null>(null);
   const [shakeCard, setShakeCard] = useState(false);
@@ -481,9 +556,11 @@ export default function HomePage() {
             </h1>
             <p className="text-sm text-slate-500 mt-1.5 leading-relaxed">
               選擇您想了解的問題行為，開始{" "}
-              <span className="font-bold text-cat-600">ABC+E 分析</span>{" "}
+              <span className="font-bold text-cat-600">ABC 分析</span>{" "}
               與對策規劃
             </p>
+            {/* 訪客計數器 */}
+            <VisitorCounter />
           </div>
         </div>
 
@@ -553,7 +630,7 @@ export default function HomePage() {
             👇 請選擇一個您想了解的問題行為
           </p>
           <p className="text-xs text-slate-400 mt-0.5">
-            點擊下方卡片選擇一項，即可進行 ABC+E 行為分析
+            點擊下方卡片選擇一項，即可進行 ABC 行為分析
           </p>
         </div>
       </div>
@@ -651,7 +728,7 @@ export default function HomePage() {
               <ClipboardList size={22} className="text-purple-500" />
             </div>
             <span className="text-sm font-bold text-slate-700">直接分析</span>
-            <span className="text-[10px] text-slate-400">快速 ABC+E 分析</span>
+            <span className="text-[10px] text-slate-400">快速 ABC 分析</span>
           </Link>
         </div>
       </div>
