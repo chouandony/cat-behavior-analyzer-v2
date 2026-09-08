@@ -5,7 +5,7 @@ import CatSVG from '@/components/CatSVG'
 
 export const metadata: Metadata = {
   title: '貓咪行為分析與訓練對策 | Cat Behavior Analyzer',
-  description: '從天性判讀到訓練技術選擇的完整流程。分析貓咪不良行為的 ABC+E 模式，找到最適合的訓練對策，記錄進度改善成效。',
+  description: '從天性判讀到訓練技術選擇的完整流程。分析貓咪不良行為的 ABC 模式，找到最適合的訓練對策，記錄進度改善成效。',
   keywords: '貓咪訓練, 行為分析, 亂尿, 咬人, 抓沙發, 多貓衝突, 正向訓練, ABC分析, 貓行為',
   openGraph: {
     title: '貓咪行為分析與訓練對策',
@@ -34,16 +34,9 @@ export default function RootLayout({
         <div className="fixed inset-0 dot-pattern opacity-30 pointer-events-none z-0" />
 
         <Navbar />
-        <main className="max-w-2xl mx-auto px-4 py-6 pb-28 relative z-10">
+        <main className="max-w-2xl mx-auto px-4 py-6 pb-24 relative z-10">
           {children}
         </main>
-
-        {/* 底部免責聲明 */}
-        <div className="fixed bottom-0 left-0 right-0 bg-slate-800 text-white text-[10px] leading-tight py-1.5 px-3 text-center z-30">
-          <p className="line-clamp-2">
-            本工具僅供參考，不構成專業獸醫或行為諮詢建議。評估結果基於學術框架獨立編寫，非官方授權問卷。若依本工具操作導致寵物或人員受傷，開發者不負法律責任。嚴重問題請尋求認證行為諮詢師協助。
-          </p>
-        </div>
 
         {/* 底部裝飾 */}
         <div className="fixed bottom-0 left-0 right-0 h-1 bg-gradient-to-r from-forest-400 via-cat-400 to-forest-400 opacity-60" />
