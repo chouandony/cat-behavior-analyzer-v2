@@ -231,7 +231,7 @@ export default function QuestionnairePage() {
             <div className="flex items-center gap-2 mb-1">
               <ClipboardCheck size={16} className="text-orange-500" />
               <span className="text-xs font-bold text-orange-600 tracking-wide">
-                專業行為評估
+                Fe-BARQ 專業評估
               </span>
             </div>
             <h1 className="text-xl font-black text-slate-800 leading-tight">
@@ -240,6 +240,12 @@ export default function QuestionnairePage() {
             <p className="text-sm text-slate-500 mt-1 leading-relaxed">
               100題專業評估，涵蓋24個行為維度，幫助您全面了解貓咪的行為特徵。
             </p>
+            {/* 免責聲明 */}
+            <div className="mt-3 bg-amber-50 border border-amber-200 rounded-lg p-3">
+              <p className="text-xs text-amber-800 leading-relaxed">
+                <b>⚠️ 重要聲明：</b>本問卷基於學術研究框架獨立編寫，非官方授權的標準化問卷。評估結果僅供參考，不能取代專業獸醫或認證行為諮詢師的診斷。若您依據本工具的建議操作，導致寵物受傷、行為問題惡化或人員受傷，開發者不負相關法律責任。
+              </p>
+            </div>
           </div>
         </div>
 
