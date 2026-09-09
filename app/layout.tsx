@@ -43,7 +43,7 @@ export default function RootLayout({
         {/* 底部免責聲明 */}
         <div
           id="site-disclaimer"
-          className="fixed bottom-0 left-0 right-0 bg-slate-800 text-white text-[10px] py-2 px-4 text-center z-0"
+          className="fixed bottom-0 left-0 right-0 bg-slate-800 text-white text-[10px] py-2 px-4 text-center z-30"
           style={{ paddingBottom: 'calc(0.5rem + env(safe-area-inset-bottom, 0px))' }}
         >
           <p>

@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useCallback, useEffect } from "react";
+import { createPortal } from "react-dom";
 import Link from "next/link";
 import {
   ArrowRight,
@@ -738,8 +739,8 @@ export default function HomePage() {
         <CatSVG size={80} pose="sleeping" />
       </div>
 
-      {/* 使用手冊彈窗 */}
-      {showGuide && (
+      {/* 使用手冊彈窗（用 createPortal 掛到 document.body，跳出 main 的堆疊上下文，才能蓋過免責聲明） */}
+      {showGuide && createPortal(
         <div
           className="fixed inset-0 z-[100] bg-black/40 backdrop-blur-sm flex items-end sm:items-center justify-center"
           onClick={(e) => { if (e.target === e.currentTarget) setShowGuide(false); }}
@@ -809,7 +810,7 @@ export default function HomePage() {
             </div>
           </div>
         </div>
-      )}
+      , document.body)}
     </div>
   );
 }
