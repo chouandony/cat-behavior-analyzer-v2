@@ -2,6 +2,7 @@ import type { Metadata } from 'next'
 import './globals.css'
 import Navbar from '@/components/Navbar'
 import CatSVG from '@/components/CatSVG'
+import DisclaimerMeasure from '@/components/DisclaimerMeasure'
 
 export const metadata: Metadata = {
   title: '貓咪行為分析與訓練對策 | Cat Behavior Analyzer',
@@ -34,16 +35,22 @@ export default function RootLayout({
         <div className="fixed inset-0 dot-pattern opacity-30 pointer-events-none z-0" />
 
         <Navbar />
-        <main className="max-w-2xl mx-auto px-4 py-6 pb-28 relative z-10">
+        {/* pb 動態 = 免責聲明實際高度 + 6rem 緩衝，由 DisclaimerMeasure 提供 --disclaimer-height */}
+        <main className="max-w-2xl mx-auto px-4 py-6 pb-[calc(var(--disclaimer-height,5rem)_+_6rem)] relative z-10">
           {children}
         </main>
 
         {/* 底部免責聲明 */}
-        <div className="fixed bottom-0 left-0 right-0 bg-slate-800 text-white text-[10px] py-2 px-4 text-center z-30">
+        <div
+          id="site-disclaimer"
+          className="fixed bottom-0 left-0 right-0 bg-slate-800 text-white text-[10px] py-2 px-4 text-center z-30"
+          style={{ paddingBottom: 'calc(0.5rem + env(safe-area-inset-bottom, 0px))' }}
+        >
           <p>
             本工具僅供輔助參考，不構成專業獸醫或動物行為諮詢建議。評估結果與訓練對策基於學術研究框架獨立編寫，非官方授權的標準化問卷。若您依據本工具建議操作，導致寵物受傷、行為問題惡化或人員受傷，開發者不負相關法律責任。如有嚴重行為問題，請尋求認證行為諮詢師協助。
           </p>
         </div>
+        <DisclaimerMeasure />
 
         {/* 底部裝飾 */}
         <div className="fixed bottom-0 left-0 right-0 h-1 bg-gradient-to-r from-forest-400 via-cat-400 to-forest-400 opacity-60" />

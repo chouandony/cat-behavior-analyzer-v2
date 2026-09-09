@@ -427,8 +427,8 @@ export default function QuestionnairePage() {
         </div>
       </div>
 
-      {/* 底部導航按鈕 */}
-      <div className="fixed bottom-10 left-0 right-0 bg-white/90 backdrop-blur-md border-t border-slate-200 p-4 z-40">
+      {/* 底部導航按鈕：定位改為動態避開免責聲明（--disclaimer-height 由 layout 的 DisclaimerMeasure 提供） */}
+      <div className="fixed bottom-[var(--disclaimer-height,5rem)] left-0 right-0 bg-white/90 backdrop-blur-md border-t border-slate-200 p-4 z-40">
         <div className="max-w-2xl mx-auto flex items-center gap-3">
           <button
             onClick={handlePrev}
