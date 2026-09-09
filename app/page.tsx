@@ -656,7 +656,7 @@ export default function HomePage() {
       </div>
 
       {/* 底部浮動按鈕 */}
-      <div className="fixed bottom-16 left-0 right-0 px-4 z-[60]">
+      <div className="fixed bottom-[var(--disclaimer-height,5rem)] left-0 right-0 px-4 z-[60]">
         <div className="max-w-2xl mx-auto">
           {selected ? (
             <Link
