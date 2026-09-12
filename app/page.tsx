@@ -89,8 +89,8 @@ const guidePages = [
         <p className="text-xs text-slate-600 mt-1">100 題專業評估，涵蓋 24 個行為維度。<br/>適合：「我不知道貓咪到底有什麼問題。」</p>
       </div>
       <div className="bg-slate-50 rounded-lg p-3">
-        <p className="text-sm font-bold text-slate-700">🐱 問題行為卡片</p>
-        <p className="text-xs text-slate-600 mt-1">亂尿／噴尿 / 焦慮與恐懼 / 破壞抓家具 / 攻擊性行為 / 護食護位置 / 過動衝動<br/>選一個 → 按「開始 ABC 分析」</p>
+        <p className="text-sm font-bold text-slate-700">🐱 問題行為卡片（共 12 項）</p>
+        <p className="text-xs text-slate-600 mt-1">排泄問題 / 破壞行為 / 攻擊行為 / 過度發聲 / 多貓衝突 / 恐懼與逃避<br/>分離焦慮 / 強迫行為 / 精力過盛·玩耍攻擊 / 衝門·逃跑 / 社交不適 / 過度尋求關注<br/>選一個 → 按「開始 ABC 分析」</p>
       </div>
       <div className="grid grid-cols-2 gap-2 text-xs">
         <div className="bg-blue-50 rounded-lg p-2 text-center"><p className="font-bold text-blue-700">📚 35 個訓練技術</p></div>
@@ -103,34 +103,23 @@ const guidePages = [
   </div>,
   <div key="4" className="space-y-4">
     <h3 className="text-lg font-black text-slate-800">📊 行為評估｜先全面了解你的貓</h3>
-    <p className="text-sm text-slate-600 leading-relaxed"><span className="font-bold">F</span>eline <span className="font-bold">B</span>ehavioral <span className="font-bold">A</span>ssessment & <span className="font-bold">R</span>esearch <span className="font-bold">Q</span>uestionnaire</p>
+    <p className="text-sm text-slate-600 leading-relaxed"><span className="font-bold">F</span>eline <span className="font-bold">B</span>ehavioral <span className="font-bold">A</span>ssessment & <span className="font-bold">R</span>esearch <span className="font-bold">Q</span>uestionnaire（Fe-BARQ）</p>
     <p className="text-xs text-slate-500">這是一套標準化的貓咪行為評估工具，我們將它轉化成一般飼主可以在家完成的互動式問卷。</p>
     <div className="bg-gradient-to-br from-cat-50 to-emerald-50 rounded-xl border-2 border-cat-200 p-4">
       <p className="text-sm font-bold text-slate-700 mb-3">📋 24 個行為維度</p>
       <div className="grid grid-cols-2 gap-x-2 gap-y-1 text-xs text-slate-600">
-        <p>1️⃣ 活動／玩耍性</p>
-        <p>2️⃣ 對人的社交性</p>
-        <p>3️⃣ 定向叫聲／發聲</p>
-        <p>4️⃣ 呼嚕聲</p>
-        <p>5️⃣ 尋求關注</p>
-        <p>6️⃣ 對貓的社交性</p>
-        <p>7️⃣ 對陌生人攻擊性</p>
-        <p>8️⃣ 對主人攻擊性</p>
-        <p>9️⃣ 抗拒約束</p>
-        <p>🔟 對熟悉貓的攻擊性</p>
-        <p>1️⃣1️⃣ 對狗的攻擊性</p>
-        <p>1️⃣2️⃣ 恐懼與焦慮</p>
-        <p>1️⃣3️⃣ 分離相關行為</p>
-        <p>1️⃣4️⃣ 可訓練性</p>
-        <p>1️⃣5️⃣ 捕食行為</p>
-        <p>1️⃣6️⃣ 獵物興趣</p>
-        <p>1️⃣7️⃣ 睡覺地點偏好</p>
-        <p>1️⃣8️⃣ 過度舔毛</p>
-        <p>1️⃣9️⃣ 其他強迫行為</p>
-        <p>2️⃣0️⃣ 不當排泄</p>
-        <p>2️⃣1️⃣ 排泄偏好</p>
-        <p>2️⃣2️⃣ 晨昏活動性</p>
-        <p>2️⃣3️⃣ 雜項行為</p>
+        <p>1. 活動／玩耍性</p><p>2. 對人的社交性</p>
+        <p>3. 定向叫聲／發聲</p><p>4. 呼嚕聲</p>
+        <p>5. 尋求關注</p><p>6. 對貓的社交性</p>
+        <p>7. 對陌生人攻擊性</p><p>8. 對主人攻擊性／觸摸敏感度</p>
+        <p>9. 抗拒約束</p><p>10. 對熟悉貓的攻擊性</p>
+        <p>11. 對狗的攻擊性</p><p>12. 對陌生狗／貓的恐懼</p>
+        <p>13. 對新事物的恐懼</p><p>14. 分離相關行為</p>
+        <p>15. 可訓練性</p><p>16. 捕食行為</p>
+        <p>17. 獵物興趣</p><p>18. 睡覺地點偏好</p>
+        <p>19. 過度／強迫自我理毛</p><p>20. 其他強迫行為</p>
+        <p>21. 不當排泄</p><p>22. 排泄偏好</p>
+        <p>23. 晨昏活動性</p><p>24. 雜項行為</p>
       </div>
     </div>
     <p className="text-xs text-slate-500 text-center">總共 <span className="font-bold text-cat-600">100 題</span>，預估時間約 <span className="font-bold text-cat-600">10～15 分鐘</span></p>
@@ -268,7 +257,7 @@ const guidePages = [
       </div>
     </div>
     <div className="bg-yellow-50 rounded-xl border border-yellow-200 p-3">
-      <p className="text-xs text-yellow-700">💡 可以分析的行為：亂尿／噴尿、恐懼與焦慮、攻擊性行為、破壞抓家具、護食護位置、過度興奮、分離焦慮、過度舔毛、亂叫、衝門、社交不適、排泄問題。ABC 一次只能選一個，讓分析更精準。</p>
+      <p className="text-xs text-yellow-700">💡 可以分析的行為（12 項）：排泄問題、破壞行為、攻擊行為、過度發聲、多貓衝突、恐懼與逃避、分離焦慮、強迫行為、精力過盛／玩耍攻擊、衝門／逃跑、社交不適、過度尋求關注。ABC 一次只能選一個，讓分析更精準。</p>
     </div>
   </div>,
   <div key="9" className="space-y-4">
@@ -281,7 +270,7 @@ const guidePages = [
           <span className="text-sm font-bold text-red-700">🔴 安全管理</span>
         </div>
         <p className="text-xs text-slate-600">👉 現在就做。例如亂尿問題：先排除醫療問題、檢查砂盆數量（N+1 原則：貓咪數量+1個砂盆）、砂盆放在安靜通風處、遠離食水碗。</p>
-        <p className="text-xs text-slate-500 mt-1">推薦技術：環境豐富化、砂盆管理</p>
+        <p className="text-xs text-slate-500 mt-1">推薦技術：環境豐富化、砂盆偏好建立</p>
       </div>
       <div className="bg-orange-50 rounded-xl border-2 border-orange-200 p-4">
         <div className="flex items-center gap-2 mb-2">
@@ -303,22 +292,24 @@ const guidePages = [
   </div>,
   <div key="10" className="space-y-4">
     <h3 className="text-lg font-black text-slate-800">📚 35 個訓練技術｜不要只知道「要訓練」</h3>
-    <p className="text-sm text-slate-600">系統收錄 35 種貓咪訓練與行為矯正專業技術，分為六大類別：</p>
+    <p className="text-sm text-slate-600">系統收錄 35 種貓咪訓練與行為矯正專業技術，分為七大類別：</p>
     <div className="grid grid-cols-3 gap-2 text-xs text-center">
-      <div className="bg-blue-50 rounded-lg p-2 border border-blue-200"><p className="font-bold text-blue-700">基礎服從</p></div>
-      <div className="bg-red-50 rounded-lg p-2 border border-red-200"><p className="font-bold text-red-700">行為矯正</p></div>
-      <div className="bg-emerald-50 rounded-lg p-2 border border-emerald-200"><p className="font-bold text-emerald-700">環境管理</p></div>
-      <div className="bg-purple-50 rounded-lg p-2 border border-purple-200"><p className="font-bold text-purple-700">脫敏</p></div>
-      <div className="bg-yellow-50 rounded-lg p-2 border border-yellow-200"><p className="font-bold text-yellow-700">社交化</p></div>
-      <div className="bg-cat-50 rounded-lg p-2 border border-cat-200"><p className="font-bold text-cat-700">進階技巧</p></div>
+      <div className="bg-emerald-50 rounded-lg p-2 border border-emerald-200"><p className="font-bold text-emerald-700">基礎訓練</p></div>
+      <div className="bg-orange-50 rounded-lg p-2 border border-orange-200"><p className="font-bold text-orange-700">行為改造</p></div>
+      <div className="bg-blue-50 rounded-lg p-2 border border-blue-200"><p className="font-bold text-blue-700">情緒調節</p></div>
+      <div className="bg-purple-50 rounded-lg p-2 border border-purple-200"><p className="font-bold text-purple-700">環境設計</p></div>
+      <div className="bg-slate-50 rounded-lg p-2 border border-slate-200"><p className="font-bold text-slate-700">進階應用</p></div>
+      <div className="bg-pink-50 rounded-lg p-2 border border-pink-200"><p className="font-bold text-pink-700">多貓管理</p></div>
+      <div className="bg-red-50 rounded-lg p-2 border border-red-200"><p className="font-bold text-red-700">醫療照護</p></div>
     </div>
     <div className="bg-white rounded-xl border border-slate-200 p-3">
       <p className="text-sm font-bold text-slate-700 mb-1">每個技術都包含：</p>
       <div className="flex flex-wrap gap-2 text-xs">
-        <span className="bg-blue-100 text-blue-700 px-2 py-1 rounded-full">💡 核心概念</span>
-        <span className="bg-green-100 text-green-700 px-2 py-1 rounded-full">📝 操作步驟</span>
-        <span className="bg-red-100 text-red-700 px-2 py-1 rounded-full">⚠️ 常見錯誤</span>
-        <span className="bg-purple-100 text-purple-700 px-2 py-1 rounded-full">🐱 適用情境</span>
+        <span className="bg-blue-100 text-blue-700 px-2 py-1 rounded-full">📖 用途說明</span>
+        <span className="bg-green-100 text-green-700 px-2 py-1 rounded-full">🎯 適用情境</span>
+        <span className="bg-purple-100 text-purple-700 px-2 py-1 rounded-full">🔧 操作方法</span>
+        <span className="bg-red-100 text-red-700 px-2 py-1 rounded-full">💡 提醒</span>
+        <span className="bg-amber-100 text-amber-700 px-2 py-1 rounded-full">📋 範例</span>
       </div>
     </div>
     <div className="border-t-2 border-slate-100 pt-4">
@@ -338,15 +329,15 @@ const guidePages = [
     <div className="bg-white rounded-xl border-2 border-slate-200 p-4">
       <p className="text-sm font-bold text-slate-700 mb-2">貓咪行為的九大成因</p>
       <div className="grid grid-cols-1 gap-1 text-xs text-slate-600">
-        <div className="flex items-center gap-2"><span className="bg-slate-100 w-5 h-5 rounded-full flex items-center justify-center text-[10px] font-bold shrink-0">1</span><span>基因與品種傾向</span></div>
-        <div className="flex items-center gap-2"><span className="bg-slate-100 w-5 h-5 rounded-full flex items-center justify-center text-[10px] font-bold shrink-0">2</span><span>早期經驗（0～12 週齡）</span></div>
-        <div className="flex items-center gap-2"><span className="bg-slate-100 w-5 h-5 rounded-full flex items-center justify-center text-[10px] font-bold shrink-0">3</span><span>學習史（過去發生過什麼）</span></div>
-        <div className="flex items-center gap-2"><span className="bg-slate-100 w-5 h-5 rounded-full flex items-center justify-center text-[10px] font-bold shrink-0">4</span><span>健康與生理狀態</span></div>
-        <div className="flex items-center gap-2"><span className="bg-slate-100 w-5 h-5 rounded-full flex items-center justify-center text-[10px] font-bold shrink-0">5</span><span>環境與資源（空間、豐富度）</span></div>
-        <div className="flex items-center gap-2"><span className="bg-slate-100 w-5 h-5 rounded-full flex items-center justify-center text-[10px] font-bold shrink-0">6</span><span>社交關係（與人、與其他貓）</span></div>
-        <div className="flex items-center gap-2"><span className="bg-slate-100 w-5 h-5 rounded-full flex items-center justify-center text-[10px] font-bold shrink-0">7</span><span>資源競爭（食物、砂盆、睡覺處）</span></div>
-        <div className="flex items-center gap-2"><span className="bg-slate-100 w-5 h-5 rounded-full flex items-center justify-center text-[10px] font-bold shrink-0">8</span><span>壓力源（搬家、新成員、噪音）</span></div>
-        <div className="flex items-center gap-2"><span className="bg-slate-100 w-5 h-5 rounded-full flex items-center justify-center text-[10px] font-bold shrink-0">9</span><span>認知與老化（老年貓認知退化）</span></div>
+        <div className="flex items-center gap-2"><span>🏥</span><span>1. 醫療與疼痛</span></div>
+        <div className="flex items-center gap-2"><span>👶</span><span>2. 發展與幼年經驗</span></div>
+        <div className="flex items-center gap-2"><span>🧬</span><span>3. 個體氣質</span></div>
+        <div className="flex items-center gap-2"><span>💓</span><span>4. 情緒與生理喚起</span></div>
+        <div className="flex items-center gap-2"><span>📚</span><span>5. 學習歷史</span></div>
+        <div className="flex items-center gap-2"><span>🌍</span><span>6. 領域與氣味環境</span></div>
+        <div className="flex items-center gap-2"><span>🧺</span><span>7. 資源配置</span></div>
+        <div className="flex items-center gap-2"><span>👨‍👩‍👧</span><span>8. 人貓互動方式</span></div>
+        <div className="flex items-center gap-2"><span>📊</span><span>9. 壓力堆疊</span></div>
       </div>
     </div>
     <div className="bg-purple-50 rounded-xl border border-purple-200 p-3">
@@ -355,7 +346,7 @@ const guidePages = [
     <h3 className="text-sm font-bold text-slate-700 pt-2">三種使用方式</h3>
     <div className="space-y-2 text-xs text-slate-600">
       <p><b>情境一｜第一次用，想全面了解貓咪</b><br/>首頁 → 行為評估問卷 → 100 題 → 結果報告 → ABC 分析 → 訓練對策 → 35 個訓練技術 → 開始執行 → 每天追蹤</p>
-      <p><b>情境二｜已經知道貓咪有亂尿問題</b><br/>首頁 → 亂尿／噴尿 → ABC 分析 → 訓練對策 → 訓練技術 → 開始執行 → 進度追蹤</p>
+      <p><b>情境二｜已經知道貓咪有亂尿問題</b><br/>首頁 → 排泄問題 → ABC 分析 → 訓練對策 → 訓練技術 → 開始執行 → 進度追蹤</p>
       <p><b>情境三｜想先學方法</b><br/>首頁 → 35 個訓練技術 → 找到想學的方法 → 閱讀詳細說明 → 回首頁 → 選擇行為 → ABC 分析</p>
     </div>
   </div>,
