@@ -102,7 +102,13 @@ export default function QuestionnairePage() {
 
   const current = sections[currentSection];
   const totalSections = sections.length;
-  const progress = Math.round((Object.keys(answers).length / 100) * 100);
+  // 動態計算總題數與已答題數，不再寫死 100；未來資料增刪題目自動跟著變
+  const TOTAL_QUESTIONS = sections.reduce((sum, s) => sum + s.questions.length, 0);
+  const answeredCount = sections.reduce(
+    (sum, s) => sum + s.questions.filter((q) => answers[q.id] !== undefined).length,
+    0
+  );
+  const progress = Math.min(100, Math.round((answeredCount / TOTAL_QUESTIONS) * 100));
 
   const handleSelect = useCallback((qid: number, value: number) => {
     setAnswers((prev) => ({ ...prev, [qid]: value }));
@@ -238,7 +244,7 @@ export default function QuestionnairePage() {
               貓咪行為評估問卷
             </h1>
             <p className="text-sm text-slate-500 mt-1 leading-relaxed">
-              100題專業評估，涵蓋24個行為維度，幫助您全面了解貓咪的行為特徵。
+              {TOTAL_QUESTIONS}題專業評估，涵蓋{totalSections}個行為維度，幫助您全面了解貓咪的行為特徵。
             </p>
             {/* 免責聲明 */}
             <div className="mt-3 bg-amber-50 border border-amber-200 rounded-lg p-3">
@@ -262,7 +268,7 @@ export default function QuestionnairePage() {
             />
           </div>
           <div className="flex justify-between text-[10px] text-slate-400 mt-1">
-            <span>{Object.keys(answers).length} / 100 題</span>
+            <span>{answeredCount} / {TOTAL_QUESTIONS} 題</span>
             <span>第 {currentSection + 1} / {totalSections} 部分</span>
           </div>
         </div>
