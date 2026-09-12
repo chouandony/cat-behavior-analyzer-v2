@@ -231,7 +231,7 @@ export default function QuestionnairePage() {
             <div className="flex items-center gap-2 mb-1">
               <ClipboardCheck size={16} className="text-orange-500" />
               <span className="text-xs font-bold text-orange-600 tracking-wide">
-                Fe-BARQ 專業評估
+                專業行為評估
               </span>
             </div>
             <h1 className="text-xl font-black text-slate-800 leading-tight">

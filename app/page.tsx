@@ -108,30 +108,30 @@ const guidePages = [
     <div className="bg-gradient-to-br from-cat-50 to-emerald-50 rounded-xl border-2 border-cat-200 p-4">
       <p className="text-sm font-bold text-slate-700 mb-3">📋 24 個部分一覽</p>
       <div className="grid grid-cols-2 gap-x-3 gap-y-1.5 text-xs">
-        <div className="flex items-center gap-1.5"><span className="bg-cat-100 text-cat-700 px-1.5 py-0.5 rounded font-bold shrink-0">14題</span><span className="text-slate-700">活動與玩耍</span></div>
-        <div className="flex items-center gap-1.5"><span className="bg-cat-100 text-cat-700 px-1.5 py-0.5 rounded font-bold shrink-0">7題</span><span className="text-slate-700">與人的互動</span></div>
-        <div className="flex items-center gap-1.5"><span className="bg-cat-100 text-cat-700 px-1.5 py-0.5 rounded font-bold shrink-0">4題</span><span className="text-slate-700">對人喵喵叫</span></div>
-        <div className="flex items-center gap-1.5"><span className="bg-cat-100 text-cat-700 px-1.5 py-0.5 rounded font-bold shrink-0">2題</span><span className="text-slate-700">呼嚕聲</span></div>
-        <div className="flex items-center gap-1.5"><span className="bg-cat-100 text-cat-700 px-1.5 py-0.5 rounded font-bold shrink-0">2題</span><span className="text-slate-700">撒嬌討摸</span></div>
-        <div className="flex items-center gap-1.5"><span className="bg-cat-100 text-cat-700 px-1.5 py-0.5 rounded font-bold shrink-0">3題</span><span className="text-slate-700">與其他貓的相處</span></div>
-        <div className="flex items-center gap-1.5"><span className="bg-cat-100 text-cat-700 px-1.5 py-0.5 rounded font-bold shrink-0">3題</span><span className="text-slate-700">對陌生人的防衛</span></div>
-        <div className="flex items-center gap-1.5"><span className="bg-cat-100 text-cat-700 px-1.5 py-0.5 rounded font-bold shrink-0">4題</span><span className="text-slate-700">被摸時的不耐煩</span></div>
-        <div className="flex items-center gap-1.5"><span className="bg-cat-100 text-cat-700 px-1.5 py-0.5 rounded font-bold shrink-0">4題</span><span className="text-slate-700">抗拒照護</span></div>
-        <div className="flex items-center gap-1.5"><span className="bg-cat-100 text-cat-700 px-1.5 py-0.5 rounded font-bold shrink-0">4題</span><span className="text-slate-700">與家中貓咪的衝突</span></div>
-        <div className="flex items-center gap-1.5"><span className="bg-cat-100 text-cat-700 px-1.5 py-0.5 rounded font-bold shrink-0">5題</span><span className="text-slate-700">與狗的互動</span></div>
-        <div className="flex items-center gap-1.5"><span className="bg-cat-100 text-cat-700 px-1.5 py-0.5 rounded font-bold shrink-0">2題</span><span className="text-slate-700">害怕陌生動物</span></div>
-        <div className="flex items-center gap-1.5"><span className="bg-cat-100 text-cat-700 px-1.5 py-0.5 rounded font-bold shrink-0">2題</span><span className="text-slate-700">對新事物的反應</span></div>
-        <div className="flex items-center gap-1.5"><span className="bg-cat-100 text-cat-700 px-1.5 py-0.5 rounded font-bold shrink-0">6題</span><span className="text-slate-700">獨處時的表現</span></div>
-        <div className="flex items-center gap-1.5"><span className="bg-cat-100 text-cat-700 px-1.5 py-0.5 rounded font-bold shrink-0">3題</span><span className="text-slate-700">學習與配合度</span></div>
-        <div className="flex items-center gap-1.5"><span className="bg-cat-100 text-cat-700 px-1.5 py-0.5 rounded font-bold shrink-0">3題</span><span className="text-slate-700">狩獵本能</span></div>
-        <div className="flex items-center gap-1.5"><span className="bg-cat-100 text-cat-700 px-1.5 py-0.5 rounded font-bold shrink-0">2題</span><span className="text-slate-700">看獵物時的興奮反應</span></div>
-        <div className="flex items-center gap-1.5"><span className="bg-cat-100 text-cat-700 px-1.5 py-0.5 rounded font-bold shrink-0">3題</span><span className="text-slate-700">睡覺地點偏好</span></div>
-        <div className="flex items-center gap-1.5"><span className="bg-cat-100 text-cat-700 px-1.5 py-0.5 rounded font-bold shrink-0">3題</span><span className="text-slate-700">過度舔毛</span></div>
-        <div className="flex items-center gap-1.5"><span className="bg-cat-100 text-cat-700 px-1.5 py-0.5 rounded font-bold shrink-0">3題</span><span className="text-slate-700">重複性的怪異行為</span></div>
-        <div className="flex items-center gap-1.5"><span className="bg-cat-100 text-cat-700 px-1.5 py-0.5 rounded font-bold shrink-0">2題</span><span className="text-slate-700">亂大小便</span></div>
-        <div className="flex items-center gap-1.5"><span className="bg-cat-100 text-cat-700 px-1.5 py-0.5 rounded font-bold shrink-0">2題</span><span className="text-slate-700">上廁所的偏好</span></div>
-        <div className="flex items-center gap-1.5"><span className="bg-cat-100 text-cat-700 px-1.5 py-0.5 rounded font-bold shrink-0">2題</span><span className="text-slate-700">清晨與傍晚的活力</span></div>
-        <div className="flex items-center gap-1.5"><span className="bg-cat-100 text-cat-700 px-1.5 py-0.5 rounded font-bold shrink-0">15題</span><span className="text-slate-700">其他行為</span></div>
+        <p className="text-slate-700"><b>1.</b> 活動與玩耍（14題）</p>
+        <p className="text-slate-700"><b>2.</b> 與人的互動（7題）</p>
+        <p className="text-slate-700"><b>3.</b> 對人喵喵叫（4題）</p>
+        <p className="text-slate-700"><b>4.</b> 呼嚕聲（2題）</p>
+        <p className="text-slate-700"><b>5.</b> 撒嬌討摸（2題）</p>
+        <p className="text-slate-700"><b>6.</b> 與其他貓的相處（3題）</p>
+        <p className="text-slate-700"><b>7.</b> 對陌生人的防衛（3題）</p>
+        <p className="text-slate-700"><b>8.</b> 被摸時的不耐煩（4題）</p>
+        <p className="text-slate-700"><b>9.</b> 抗拒照護（4題）</p>
+        <p className="text-slate-700"><b>10.</b> 與家中貓咪的衝突（4題）</p>
+        <p className="text-slate-700"><b>11.</b> 與狗的互動（5題）</p>
+        <p className="text-slate-700"><b>12.</b> 害怕陌生動物（2題）</p>
+        <p className="text-slate-700"><b>13.</b> 對新事物的反應（2題）</p>
+        <p className="text-slate-700"><b>14.</b> 獨處時的表現（6題）</p>
+        <p className="text-slate-700"><b>15.</b> 學習與配合度（3題）</p>
+        <p className="text-slate-700"><b>16.</b> 狩獵本能（3題）</p>
+        <p className="text-slate-700"><b>17.</b> 看獵物時的興奮反應（2題）</p>
+        <p className="text-slate-700"><b>18.</b> 睡覺地點偏好（3題）</p>
+        <p className="text-slate-700"><b>19.</b> 過度舔毛（3題）</p>
+        <p className="text-slate-700"><b>20.</b> 重複性的怪異行為（3題）</p>
+        <p className="text-slate-700"><b>21.</b> 亂大小便（2題）</p>
+        <p className="text-slate-700"><b>22.</b> 上廁所的偏好（2題）</p>
+        <p className="text-slate-700"><b>23.</b> 清晨與傍晚的活力（2題）</p>
+        <p className="text-slate-700"><b>24.</b> 其他行為（15題）</p>
       </div>
     </div>
     <p className="text-xs text-slate-500 text-center">總共 <span className="font-bold text-cat-600">100 題</span>，預估時間約 <span className="font-bold text-cat-600">10～15 分鐘</span></p>
