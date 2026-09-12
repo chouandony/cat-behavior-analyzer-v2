@@ -55,7 +55,7 @@ export default function AnalysisPage() {
               C（Consequence）後果：行為發生後，貓咪得到了什麼、逃離了什麼？
             </p>
             <div className="flex justify-center mt-3">
-              <CatSVG size={90} pose="standing" />
+              <CatSVG size={90} pose="lookingup" />
             </div>
           </div>
           {abcFunctions.map(fn => (
@@ -72,7 +72,7 @@ export default function AnalysisPage() {
               貓咪行為通常不是單一原因，而是多層因素疊加。如果你只找到一個原因，通常代表分析還不夠完整。
             </p>
             <div className="flex justify-center mt-3">
-              <CatSVG size={85} pose="sitting" />
+              <CatSVG size={85} pose="lookingback" />
             </div>
           </div>
           {nineCauses.map(cause => (

@@ -66,7 +66,7 @@ function ABCForm() {
         <div className="space-y-4">
           <h2 className="text-lg font-bold text-earth-500">選擇要分析的行為</h2>
           <div className="flex justify-center py-2">
-            <CatSVG size={80} pose="pointing" />
+            <CatSVG size={80} pose="playbow" />
           </div>
           <p className="text-sm text-earth-400">請選擇一個您想了解的問題行為</p>
           <div className="grid gap-2">
@@ -153,7 +153,7 @@ function ABCForm() {
         <div className="space-y-4">
           <h2 className="text-lg font-bold text-earth-500">確認分析結果</h2>
           <div className="flex justify-center py-2">
-            <CatSVG size={70} pose="waving" />
+            <CatSVG size={70} pose="ball" />
           </div>
           <div className="bg-white rounded-xl border border-earth-200 p-4 space-y-3">
             <div>
